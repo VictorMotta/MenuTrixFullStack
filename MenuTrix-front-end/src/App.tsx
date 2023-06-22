@@ -8,6 +8,7 @@ import { Additional } from './pages/Additional';
 import { Clients } from './pages/Clients';
 import { Financial } from './pages/Financial';
 import { Estoque } from './pages/Stock';
+import { NotFoundPage } from './pages/NotFound';
 
 export default function App() {
   return (
@@ -93,6 +94,7 @@ export default function App() {
                 </Private>
               }
             />
+            <Route path='*' element={<NotFoundPage />} />
           </Routes>
         </RestaurantContextProvider>
       </AuthContextProvider>
