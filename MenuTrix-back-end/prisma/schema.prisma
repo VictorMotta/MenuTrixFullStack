@@ -1,0 +1,288 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int          @id @default(autoincrement())
+  name       String
+  email      String       @unique
+  password   String
+  cpf        String       @unique @db.VarChar(11)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  Restaurant Restaurant[]
+  Session    Session[]
+
+  @@map("user")
+}
+
+model Session {
+  id        Int      @id @default(autoincrement())
+  token     String
+  userId    Int      @unique
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("session")
+}
+
+model Restaurant {
+  id                        Int                         @id @default(autoincrement())
+  name                      String
+  photoProfile              String
+  photoCover                String
+  street                    String
+  neighborhood              String
+  city                      String
+  state                     String
+  nameParamSite             String                      @unique
+  userId                    Int                         @unique
+  User                      User                        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  RestaurantDeliveryOptions RestaurantDeliveryOptions[]
+  OpeningHour               OpeningHour[]
+  Product                   Product[]
+  Additional                Additional[]
+  Client                    Client[]
+
+  @@map("restaurant")
+}
+
+model DeliveryOptions {
+  id                        Int                         @id @default(autoincrement())
+  name                      DeliveryOptionsName         @unique
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  RestaurantDeliveryOptions RestaurantDeliveryOptions[]
+  Order                     Order[]
+
+  @@map("deliveryOptions")
+}
+
+enum DeliveryOptionsName {
+  delivery
+  withdrawal
+  local
+}
+
+model RestaurantDeliveryOptions {
+  id                Int             @id @default(autoincrement())
+  restaurantId      Int
+  Restaurant        Restaurant      @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  deliveryOptionsId Int
+  DeliveryOptions   DeliveryOptions @relation(fields: [deliveryOptionsId], references: [id], onDelete: Cascade)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@map("restaurantDeliveryOptions")
+}
+
+model DaysWeek {
+  id          Int           @id @default(autoincrement())
+  name        DaysWeekName  @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  OpeningHour OpeningHour[]
+
+  @@map("daysWeek")
+}
+
+enum DaysWeekName {
+  sunday
+  monday
+  tuesday
+  wednesday
+  thursday
+  friday
+  saturday
+}
+
+model OpeningHour {
+  id           Int        @id @default(autoincrement())
+  ofTimeHour   String
+  ofTimeMinute String
+  toTimeHour   String
+  toTimeMinute String
+  restaurantId Int
+  Restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  daysWeekId   Int
+  DaysWeek     DaysWeek   @relation(fields: [daysWeekId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@map("openingHour")
+}
+
+model Product {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  photoProduct      String
+  price             Int
+  description       String
+  hasMeatPoint      Boolean             @default(false)
+  isAvailable       Boolean             @default(true)
+  restaurantId      Int
+  Restaurant        Restaurant          @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  ProductAdditional ProductAdditional[]
+  ProductCategory   ProductCategory[]
+  OrderProduct      OrderProduct[]
+
+  @@index([name, photoProduct, price, isAvailable, hasMeatPoint])
+  @@map("product")
+}
+
+model Additional {
+  id                     Int                      @id @default(autoincrement())
+  name                   String
+  isAvailable            Boolean                  @default(true)
+  price                  Int
+  restaurantId           Int
+  Restaurant             Restaurant               @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  ProductAdditional      ProductAdditional[]
+  OrderProductAdditional OrderProductAdditional[]
+
+  @@index([name, isAvailable])
+  @@map("additional")
+}
+
+model ProductAdditional {
+  id           Int        @id @default(autoincrement())
+  productId    Int
+  Product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  additionalId Int
+  Additional   Additional @relation(fields: [additionalId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@map("productAdditional")
+}
+
+model Category {
+  id              Int               @id @default(autoincrement())
+  name            String            @unique
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  ProductCategory ProductCategory[]
+
+  @@map("category")
+}
+
+model ProductCategory {
+  id         Int      @id @default(autoincrement())
+  productId  Int
+  Product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  categoryId Int
+  Category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("productCategory")
+}
+
+model Client {
+  id           Int        @id @default(autoincrement())
+  name         String
+  email        String     @unique
+  telefone     String     @db.VarChar(11)
+  password     String?
+  restaurantId Int
+  Restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  Address      Address[]
+  Order        Order[]
+
+  @@map("client")
+}
+
+model Address {
+  id           Int      @id @default(autoincrement())
+  street       String
+  numberHouse  Int
+  neighborhood String
+  city         String
+  state        String
+  complement   String
+  clientId     Int
+  Client       Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("address")
+}
+
+model Order {
+  id                Int             @id @default(autoincrement())
+  price             Int
+  status            StatusOrder     @default(PEDING)
+  clientId          Int
+  Client            Client          @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  deliveryOptionsId Int
+  DeliveryOptions   DeliveryOptions @relation(fields: [deliveryOptionsId], references: [id], onDelete: Cascade)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  OrderProduct      OrderProduct[]
+
+  @@map("order")
+}
+
+enum StatusOrder {
+  PEDING
+  CONCLUDED
+  PROGRESS
+  DELIVERY
+}
+
+model OrderProduct {
+  id                     Int                      @id @default(autoincrement())
+  orderId                Int
+  Order                  Order                    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId              Int
+  Product                Product                  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  meatPointId            Int
+  MeatPoint              MeatPoint?               @relation(fields: [meatPointId], references: [id], onDelete: Cascade)
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  OrderProductAdditional OrderProductAdditional[]
+
+  @@map("orderProduct")
+}
+
+model OrderProductAdditional {
+  id             Int          @id @default(autoincrement())
+  orderProductId Int
+  OrderProduct   OrderProduct @relation(fields: [orderProductId], references: [id], onDelete: Cascade)
+  additionalId   Int
+  Additional     Additional   @relation(fields: [additionalId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@map("orderProductAdditional")
+}
+
+model MeatPoint {
+  id           Int            @id @default(autoincrement())
+  name         TypeMeatPoint  @unique
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  OrderProduct OrderProduct[]
+
+  @@map("meatPoint")
+}
+
+enum TypeMeatPoint {
+  Mal_Passado
+  Ao_Ponto
+  Bem_Passado
+}
