@@ -250,7 +250,7 @@ model OrderProduct {
   Order                  Order                    @relation(fields: [orderId], references: [id], onDelete: Cascade)
   productId              Int
   Product                Product                  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  meatPointId            Int
+  meatPointId            Int?
   MeatPoint              MeatPoint?               @relation(fields: [meatPointId], references: [id], onDelete: Cascade)
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
