@@ -26,39 +26,28 @@ services:
     volumes:
       - react-volume:/var/www/html
 
-  # openssl:
-  #   build: ./openssl
-  #   volumes:
-  #     - ssl-certs:/certs
-
-  certbot:
-    image: certbot/certbot
-    restart: unless-stopped
+  openssl:
+    build: ./openssl
     volumes:
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-    command: certonly --webroot --webroot-path=/var/www/certbot --email victor.mottag@gmail.com --agree-tos --no-eff-email --staging --domains www.victormotta.com.br
+      - ssl-certs:/certs
 
   nginx:
     container_name: nginx_app
     build: ./nginx
     ports:
       - 80:80
-      - 8080:8080
+      - 8080:80
       - 443:443
     volumes:
       - react-volume:/var/www/html
-      - ./certbot/conf:/etc/letsencrypt
-      # - ssl-certs:/certs
+      - ssl-certs:/certs
     depends_on:
       - db
       - api
       - spa
-      - certbot
-      # - openssl
+      - openssl
 
 volumes:
   postgres-volume:
   react-volume:
-
-  # ssl-certs:
+  ssl-certs:
