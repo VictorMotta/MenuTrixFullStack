@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import {
   MainContainer,
   NameInfo,
@@ -6,8 +5,7 @@ import {
   ContainerInfoClient,
   InfoClient,
 } from './style';
-import useToken from '../../hooks/useToken';
-import React, { Dispatch, useState } from 'react';
+import { useState } from 'react';
 import { ClientRes } from '../../pages/Client';
 
 interface PropsAdditionalItem {
@@ -15,7 +13,6 @@ interface PropsAdditionalItem {
 }
 
 export function ClientItem({ item }: PropsAdditionalItem) {
-  const token = useToken();
   const [openInfo, setOpenInfo] = useState<boolean>(false);
 
   return (
