@@ -3,7 +3,13 @@ import express, { Express } from 'express';
 import cors from 'cors';
 import { connectDb, disconnectDB } from '@/config/database';
 import { loadEnv } from '@/config/envs';
-import { additionalsRouter, productsRouter, restaurantsRouter, usersRouter } from '@/routers';
+import {
+  additionalsRouter,
+  clientesRouter,
+  productsRouter,
+  restaurantsRouter,
+  usersRouter,
+} from '@/routers';
 import { handleApplicationErrors } from '@/middlewares';
 
 loadEnv();
@@ -19,6 +25,7 @@ app
   .use('/product', productsRouter)
   .use('/additional', additionalsRouter)
   .use('/product', productsRouter)
+  .use('/client', clientesRouter)
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {

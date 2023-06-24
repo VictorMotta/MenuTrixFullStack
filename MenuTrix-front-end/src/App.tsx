@@ -2,10 +2,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { AuthContextProvider } from './contexts/authContext';
 import { Private } from './components/Authenticated';
-import { DataAndSecurity, Orders, Product, Restaurant, SignIn, SignUp } from './pages';
+import { DataAndSecurity, Order, Product, Restaurant, SignIn, SignUp } from './pages';
 import { RestaurantContextProvider } from './contexts/restaurantContext';
 import { Additional } from './pages/Additional';
-import { Clients } from './pages/Clients';
+import { Client } from './pages/Client';
 import { Financial } from './pages/Financial';
 import { Estoque } from './pages/Stock';
 import { NotFoundPage } from './pages/NotFound';
@@ -58,7 +58,7 @@ export default function App() {
               path='/pedidos'
               element={
                 <Private>
-                  <Orders />
+                  <Order />
                 </Private>
               }
             />
@@ -74,7 +74,7 @@ export default function App() {
               path='/clientes'
               element={
                 <Private>
-                  <Clients />
+                  <Client />
                 </Private>
               }
             />

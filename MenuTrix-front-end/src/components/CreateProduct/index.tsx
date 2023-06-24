@@ -124,7 +124,7 @@ export function CreateProduct({ setSelected, loadingPage, setLoadingPage }: Prop
 
   return (
     <MainContainer>
-      <TopContainer>Create Product</TopContainer>
+      <TopContainer>Criar Produto</TopContainer>
       <FormContainer onSubmit={handleSubmit}>
         <ContentContainer>
           <ContentColumn>

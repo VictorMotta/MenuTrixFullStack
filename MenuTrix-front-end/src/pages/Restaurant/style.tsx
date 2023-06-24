@@ -25,7 +25,7 @@ export const ContentContainer = styled.div`
   max-height: 85vh;
   background: #ffffff;
   border-radius: 10px;
-  margin-right: 1.5%;
+  margin-right: 2.3%;
   margin-top: 1.5%;
   overflow: auto;
   scrollbar-width: thin;

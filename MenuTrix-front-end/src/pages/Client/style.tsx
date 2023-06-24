@@ -9,6 +9,7 @@ export const MainContainer = styled.div`
   background-color: #d9e0e7;
   overflow: hidden;
 `;
+
 export const SecondContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -45,7 +46,6 @@ export const ContainerCreateSearch = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 0;
 `;
 
 export const ButtonCreate = styled.button`
@@ -63,31 +63,17 @@ export const ButtonCreate = styled.button`
   border-radius: 20px;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 0px;
   cursor: pointer;
   h1 {
     margin-left: 10px;
   }
 `;
 
-export const ContainerProducts = styled.div`
+export const ContainerContentClient = styled.div`
   width: 100%;
-  margin-top: 20px;
-`;
-
-export const ContainerNotHasProduct = styled.div`
-  width: 100%;
-  min-height: 50vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const NotHasProduct = styled.h1`
-  width: 60%;
-  font-family: 'Rubik';
-  font-weight: 700;
-  text-align: center;
-  font-size: 40px;
-  color: #29333a;
+  justify-content: space-between;
+  margin-top: 30px;
+  flex-wrap: wrap;
 `;

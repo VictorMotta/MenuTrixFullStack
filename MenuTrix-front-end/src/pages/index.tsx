@@ -1,5 +1,5 @@
 export * from './DataAndSecurity';
-export * from './Orders';
+export * from './Order';
 export * from './Product';
 export * from './Restaurant';
 export * from './SignIn';
