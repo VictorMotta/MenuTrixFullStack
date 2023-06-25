@@ -36,8 +36,6 @@ async function createOrUpdateRestaurant(body: RestaurantBodyType, userId: number
   if (body.deliveryOptions.length <= 0 || body.daysWeek.length <= 0)
     throw invalidCredentialsError();
 
-  if (body.openingHour.ofTimeHour > body.openingHour.toTimeHour) throw invalidCredentialsError();
-
   const restaurantId = await restaurantsRepository.createOrUpdateRestaurant(body, userId);
   if (!restaurantId) throw conflictError();
 

@@ -1,8 +1,7 @@
 import 'express-async-errors';
 import express, { Express } from 'express';
 import cors from 'cors';
-import { connectDb, disconnectDB } from '@/config/database';
-import { loadEnv } from '@/config/envs';
+import { connectDb, disconnectDB } from '@/config';
 import {
   additionalsRouter,
   clientesRouter,
@@ -11,6 +10,7 @@ import {
   usersRouter,
 } from '@/routers';
 import { handleApplicationErrors } from '@/middlewares';
+import { loadEnv } from '@/config';
 
 loadEnv();
 

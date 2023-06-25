@@ -242,6 +242,7 @@ enum StatusOrder {
   CONCLUDED
   PROGRESS
   DELIVERY
+  REFUSED
 }
 
 model OrderProduct {
@@ -282,7 +283,7 @@ model MeatPoint {
 }
 
 enum TypeMeatPoint {
-  Mal_Passado
-  Ao_Ponto
-  Bem_Passado
+  MEAT_RARE
+  MEDIUM_MEAT
+  WELL_DONE_MEAT
 }

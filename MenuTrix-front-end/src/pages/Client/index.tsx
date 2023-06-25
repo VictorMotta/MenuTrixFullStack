@@ -5,8 +5,10 @@ import {
   ButtonCreate,
   ContainerContentClient,
   ContainerCreateSearch,
+  ContainerNotHasClient,
   ContentContainer,
   MainContainer,
+  NotHasClient,
   SecondContainer,
 } from './style';
 import { MdAddCircle } from 'react-icons/md';
@@ -90,7 +92,7 @@ export function Client() {
                   <h1>Criar</h1>
                 </ButtonCreate>
                 <SearchInput
-                  placeholder='Digite o nome do produto'
+                  placeholder='Digite o nome do cliente'
                   name='search'
                   onKeyUp={handleSearchChange}
                   value={search.search}
@@ -102,7 +104,13 @@ export function Client() {
             )}
           </ContainerCreateSearch>
           <ContainerContentClient>
-            {clients[0] && clients.map((item) => <ClientItem item={item} />)}
+            {clients[0] ? (
+              clients.map((item) => <ClientItem item={item} />)
+            ) : (
+              <ContainerNotHasClient>
+                <NotHasClient>Adicione um cliente para aparecer aqui!</NotHasClient>
+              </ContainerNotHasClient>
+            )}
           </ContainerContentClient>
         </ContentContainer>
       </SecondContainer>

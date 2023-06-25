@@ -7,8 +7,10 @@ import {
   ButtonCreate,
   ContainerContentAdditional,
   ContainerCreateSearch,
+  ContainerNotHasAdditional,
   ContentContainer,
   MainContainer,
+  NotHasAdditional,
   SecondContainer,
 } from './style';
 import { MdAddCircle } from 'react-icons/md';
@@ -86,7 +88,7 @@ export function Additional() {
                   <h1>Criar</h1>
                 </ButtonCreate>
                 <SearchInput
-                  placeholder='Digite o nome do produto'
+                  placeholder='Digite o nome do adicional'
                   name='search'
                   onKeyUp={handleSearchChange}
                   value={search.search}
@@ -102,7 +104,7 @@ export function Additional() {
             )}
           </ContainerCreateSearch>
           <ContainerContentAdditional>
-            {additionals &&
+            {additionals[0] ? (
               additionals.map((item) => (
                 <AdditionalItem
                   key={item.id}
@@ -110,7 +112,12 @@ export function Additional() {
                   additionals={additionals}
                   setAdditionals={setAdditionals}
                 />
-              ))}
+              ))
+            ) : (
+              <ContainerNotHasAdditional>
+                <NotHasAdditional>Adicione um adicional para aparecer aqui!</NotHasAdditional>
+              </ContainerNotHasAdditional>
+            )}
           </ContainerContentAdditional>
         </ContentContainer>
       </SecondContainer>

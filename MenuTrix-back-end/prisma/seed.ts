@@ -53,13 +53,13 @@ async function main() {
     await prisma.meatPoint.createMany({
       data: [
         {
-          name: 'Mal_Passado',
+          name: 'MEAT_RARE',
         },
         {
-          name: 'Ao_Ponto',
+          name: 'MEDIUM_MEAT',
         },
         {
-          name: 'Bem_Passado',
+          name: 'WELL_DONE_MEAT',
         },
       ],
     });

@@ -23,7 +23,7 @@ export const ContentContainer = styled.div`
   height: 100%;
   min-height: 85vh;
   max-height: 85vh;
-  margin-right: 2.3%;
+  margin-right: 1.7%;
   overflow: auto;
   position: relative;
   scrollbar-width: thin;

@@ -24,7 +24,7 @@ export const ContentContainer = styled.div`
   height: 100%;
   min-height: 85vh;
   max-height: 85vh;
-  margin-right: 2.3%;
+  margin-right: 1.7%;
   overflow: auto;
   position: relative;
   scrollbar-width: thin;
@@ -76,4 +76,21 @@ export const ContainerContentClient = styled.div`
   justify-content: space-between;
   margin-top: 30px;
   flex-wrap: wrap;
+`;
+
+export const ContainerNotHasClient = styled.div`
+  width: 100%;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const NotHasClient = styled.h1`
+  width: 60%;
+  font-family: 'Rubik';
+  font-weight: 700;
+  text-align: center;
+  font-size: 40px;
+  color: #29333a;
 `;
