@@ -142,7 +142,6 @@ export function ProductItem({
       toast.error('Erro ao tentar deixar indisponível, Tente recarregar a pagina!');
     }
   }
-  console.log(productEdited.photoProduct);
   async function handleAlterProduct() {
     try {
       const price = convertCents(String(productEdited.price));
