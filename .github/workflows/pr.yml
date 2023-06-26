@@ -13,9 +13,10 @@ jobs:
           envkey_POSTGRES_PASSWORD: 'postgres'
           envkey_PORT: 4000
           envkey_JWT_SECRET: 'top_secret'
+          envkey_POSTGRES_HOST: 'postgres'
           envkey_POSTGRES_PORT: '5432'
-          envkey_POSTGRES_DB: 'menu_trix_test'
-          envkey_DATABASE_URL: 'postgresql://postgres:postgres@$postgres:5432/menu_trix_test?schema=public'
+          envkey_POSTGRES_DB: 'menu_trix'
+          envkey_DATABASE_URL: 'postgresql://postgres:postgres@postgres:5432/menu_trix?schema=public'
           directory: MenuTrix-back-end
           file_name: .env.test
           fail_on_empty: true
