@@ -3,6 +3,8 @@ import {
   alterProduct,
   createProduct,
   getAllProducts,
+  getAllProductsAvailable,
+  getAllProductsAvailableByName,
   getProductsByName,
 } from '@/controllers';
 import { authenticateToken, validateBody } from '@/middlewares';
@@ -19,6 +21,8 @@ productsRouter
   .all('/*', authenticateToken)
   .get('/', getAllProducts)
   .get('/search', getProductsByName)
+  .get('/available', getAllProductsAvailable)
+  .get('/available/search', getAllProductsAvailableByName)
   .post('/', validateBody(CreateProductSchema), createProduct)
   .put('/available/:idProduct', validateBody(AvailableProductSchema), alterAvailableProduct)
   .put('/:idProduct', validateBody(updateProductSchema), alterProduct);

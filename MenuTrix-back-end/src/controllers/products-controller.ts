@@ -29,6 +29,36 @@ export async function getProductsByName(
   }
 }
 
+export async function getAllProductsAvailable(
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) {
+  const userId = req.userId;
+
+  try {
+    const response = await productsService.getAllProductsAvailable(userId);
+    res.send(response);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getAllProductsAvailableByName(
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) {
+  const userId = req.userId;
+  const { name } = req.query as { name: string };
+  try {
+    const response = await productsService.getAllProductsAvailableByName(name, userId);
+    res.send(response);
+  } catch (error) {
+    next(error);
+  }
+}
+
 export async function createProduct(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const userId = req.userId;
   const body = req.body as ProductBody;

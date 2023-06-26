@@ -16,6 +16,21 @@ export async function getAllProducts(token: string | undefined) {
   return response.data;
 }
 
+export async function getAllProductsAvailable(token: string | undefined) {
+  const response = await api.get(`/product/available`, createHeaderToken(token));
+
+  return response.data;
+}
+
+export async function getAllProductsAvailableSearch(token: string | undefined, name: string) {
+  const response = await api.get(
+    `/product/available/search?name=${name}`,
+    createHeaderToken(token)
+  );
+
+  return response.data;
+}
+
 export async function getProductSearch(token: string | undefined, name: string) {
   const response = await api.get(`/product/search?name=${name}`, createHeaderToken(token));
 

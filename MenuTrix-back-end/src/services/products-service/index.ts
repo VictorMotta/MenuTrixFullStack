@@ -18,8 +18,26 @@ async function getProductsByName(name: string, userId: number) {
   const restaurant = await restaurantsRepository.getRestaurantById(userId);
   if (!restaurant) throw conflictError();
 
-  const additionals = await productsRepository.getProductsContainsName(name, restaurant.id);
-  return additionals;
+  const products = await productsRepository.getProductsContainsName(name, restaurant.id);
+  return products;
+}
+
+async function getAllProductsAvailable(userId: number) {
+  const restaurant = await restaurantsRepository.getRestaurantById(userId);
+  if (!restaurant) throw conflictError();
+
+  const products = await productsRepository.getAllProductsAvailable(restaurant.id);
+  console.log(products);
+  return products;
+}
+
+async function getAllProductsAvailableByName(name: string, userId: number) {
+  const restaurant = await restaurantsRepository.getRestaurantById(userId);
+  if (!restaurant) throw conflictError();
+
+  const products = await productsRepository.getAllProductsAvailableByName(name, restaurant.id);
+  console.log(products);
+  return products;
 }
 
 async function createProduct(body: ProductBody, userId: number) {
@@ -75,6 +93,8 @@ async function alterProduct(body: UpdateProductBody, idProduct: number, userId: 
 const productsService = {
   getAllProducts,
   getProductsByName,
+  getAllProductsAvailable,
+  getAllProductsAvailableByName,
   createProduct,
   alterAvailableProduct,
   alterProduct,

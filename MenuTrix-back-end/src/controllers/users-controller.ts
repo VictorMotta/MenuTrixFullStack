@@ -19,6 +19,7 @@ export async function createUser(req: Request, res: Response, next: NextFunction
     await usersService.createUser({ name, email, password, cpf });
     res.sendStatus(201);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 }

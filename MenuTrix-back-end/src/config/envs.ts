@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
 
 export function loadEnv() {
-  console.log(process.env.NODE_ENV);
   const node_env = process.env.NODE_ENV;
 
   const path =

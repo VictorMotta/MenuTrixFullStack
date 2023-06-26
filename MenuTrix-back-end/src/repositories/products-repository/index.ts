@@ -166,6 +166,98 @@ async function getProductByName(name: string, restaurantId: number) {
   });
 }
 
+async function getAllProductsAvailable(restaurantId: number) {
+  return prisma.product.findMany({
+    where: {
+      AND: [{ restaurantId }, { isAvailable: true }],
+    },
+    select: {
+      id: true,
+      name: true,
+      photoProduct: true,
+      price: true,
+      hasMeatPoint: true,
+      isAvailable: true,
+      description: true,
+      ProductAdditional: {
+        where: {
+          Additional: {
+            isAvailable: true,
+          },
+        },
+        select: {
+          Additional: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
+      ProductCategory: {
+        select: {
+          Category: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
+    },
+  });
+}
+
+async function getAllProductsAvailableByName(name: string, restaurantId: number) {
+  return prisma.product.findMany({
+    where: {
+      AND: [
+        {
+          name: {
+            contains: name.toLocaleUpperCase(),
+          },
+        },
+        { restaurantId },
+        { isAvailable: true },
+      ],
+    },
+    select: {
+      id: true,
+      name: true,
+      photoProduct: true,
+      price: true,
+      hasMeatPoint: true,
+      isAvailable: true,
+      description: true,
+      ProductAdditional: {
+        where: {
+          Additional: {
+            isAvailable: true,
+          },
+        },
+        select: {
+          Additional: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
+      ProductCategory: {
+        select: {
+          Category: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
+    },
+  });
+}
+
 async function createProduct(body: ProductBody, restaurantId: number) {
   return await prisma.$transaction(async (prisma) => {
     const existingCategory = await prisma.category.findUnique({
@@ -206,7 +298,6 @@ async function createProduct(body: ProductBody, restaurantId: number) {
         },
       },
     });
-    console.log('chegou aqui!');
 
     if (body.additionals[0]) {
       for (let i = 0; i < body.additionals.length; i++) {
@@ -268,6 +359,8 @@ const productsRepository = {
   getAllProducts,
   getProductByName,
   getProductsContainsName,
+  getAllProductsAvailable,
+  getAllProductsAvailableByName,
   createProduct,
   alterAvailable,
   alterProduct,
