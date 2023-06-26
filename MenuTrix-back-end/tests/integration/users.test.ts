@@ -17,6 +17,7 @@ const server = supertest(app);
 
 describe('POST /sign-up', () => {
   //teste
+  //teste2
   it('should respond with status 400 when body is not given', async () => {
     const response = await server.post('/sign-up');
 
