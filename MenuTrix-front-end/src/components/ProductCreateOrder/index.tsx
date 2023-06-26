@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { ProductRes } from '../../pages';
 import {
   ContainerInfo,
@@ -47,6 +47,8 @@ export function ProductCreateOrder({
   const typeMeatPoint = ['Mal Passada', 'Ao Ponto', 'Bem Passado'];
   const price = currencyValue(String(item.price));
 
+  console.log(orderProduct);
+
   function selectAdditional(id: number) {
     if (!additionalsSelected[0]) {
       return setAdditionalsSelected([id]);
@@ -60,6 +62,8 @@ export function ProductCreateOrder({
         setAdditionalsSelected([...additionalsSelected, id]);
       }
     }
+
+    setOrderProduct([...orderProduct]);
   }
 
   function selectMeatPoint(name: string) {
@@ -68,7 +72,7 @@ export function ProductCreateOrder({
 
   function cancelInsertProduct() {
     /* eslint-disable-next-line */
-    const newArr = selectProduct.filter((product, i) => i !== index);
+    const newArr = selectProduct.filter((_product, i) => i !== index);
     setSelectProduct(newArr);
   }
 

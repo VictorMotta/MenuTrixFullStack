@@ -15,7 +15,6 @@ import {
   CheckmarkContainer,
   CheckmarkIcon,
   ContainerInputSearch,
-  ContainerItem,
   ContainerSuspended,
   ContainerValueTotal,
   ContentColumn,
@@ -24,7 +23,6 @@ import {
   Input,
   InputCheckBox,
   InputContainer,
-  InputSearchProducts,
   Label,
   MainContainer,
   TitleOptions,
@@ -38,11 +36,6 @@ import { ProductRes } from '../../pages';
 import { ProductCreateOrder } from '../ProductCreateOrder';
 import { SelectProductOrder } from '../SelectProductOrder';
 import { currencyValue } from '../../functions/masks';
-
-interface Option {
-  value: string;
-  label: string;
-}
 
 export interface OrderBody {
   deliveryOption: string;
@@ -220,8 +213,6 @@ export function CreateOrder({ setOpenCreate, setLoadingPage, loadingPage }: Prop
                         item={item}
                         selectProduct={selectProduct}
                         setSelectProduct={setSelectProduct}
-                        allProducts={allProducts}
-                        setAllProducts={setAllProducts}
                       />
                     ))
                   ) : (
