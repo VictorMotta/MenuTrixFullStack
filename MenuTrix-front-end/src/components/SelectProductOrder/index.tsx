@@ -14,16 +14,12 @@ interface PropsProductCreateOrder {
   item: ProductRes;
   selectProduct: ProductRes[];
   setSelectProduct: Dispatch<SetStateAction<ProductRes[]>>;
-  allProducts: ProductRes[];
-  setAllProducts: Dispatch<SetStateAction<ProductRes[]>>;
 }
 
 export function SelectProductOrder({
   item,
   selectProduct,
   setSelectProduct,
-  allProducts,
-  setAllProducts,
 }: PropsProductCreateOrder) {
   function select() {
     setSelectProduct([...selectProduct, item]);
