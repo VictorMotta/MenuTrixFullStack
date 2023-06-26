@@ -11,7 +11,7 @@ jobs:
         with:
           envkey_POSTGRES_USERNAME: 'postgres'
           envkey_POSTGRES_PASSWORD: 'postgres'
-          envkey_PORT: '4000'
+          envkey_PORT: 4000
           envkey_JWT_SECRET: 'top_secret'
           envkey_POSTGRES_PORT: '5432'
           envkey_POSTGRES_DB: 'menu_trix_test'
@@ -20,4 +20,4 @@ jobs:
           file_name: .env.test
           fail_on_empty: true
       - name: Run tests
-        run: docker-compose -f docker-compose-tests.yml run node_app npm run test
+        run: docker compose -f docker-compose-tests.yml run api npm run test
