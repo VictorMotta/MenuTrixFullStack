@@ -30,7 +30,7 @@ jobs:
           directory: MenuTrix-front-end
           file_name: .env
           fail_on_empty: true
-      - name: Run docker compose down
+      - name: Run docker compose down -v
         run: docker compose down
       - name: Delete react docker volume
         run: if docker volume ls --quiet --filter name=menutrix_fullstack_react-volume | grep -q .; then docker volume rm menutrix_fullstack_react-volume; fi
