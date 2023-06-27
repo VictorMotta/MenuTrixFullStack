@@ -54,7 +54,6 @@ services:
       - api
       - spa
       - certbot
-      # - openssl
 
 volumes:
   postgres-volume:
