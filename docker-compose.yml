@@ -26,15 +26,6 @@ services:
     volumes:
       - react-volume:/var/www/html
 
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
-      - react-volume:/var/www/html
-    command: certonly --webroot --agree-tos --email victor.mottag@gmail.com -w /var/www/html -d victormotta.com.br
-
   nginx:
     container_name: nginx_app
     build: ./nginx
@@ -44,15 +35,11 @@ services:
       - 443:443
     volumes:
       - react-volume:/var/www/html
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
     depends_on:
       - db
       - api
       - spa
-      - certbot
 
 volumes:
   postgres-volume:
   react-volume:
-  ssl-certs:
