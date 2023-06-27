@@ -34,11 +34,6 @@ services:
       - react-volume:/var/www/html
     command: certonly --webroot --agree-tos --email victor.mottag@gmail.com -w /var/www/html -d www.victormotta.com.br
 
-  # openssl:
-  #   build: ./openssl
-  #   volumes:
-  #     - ssl-certs:/certs
-
   nginx:
     container_name: nginx_app
     build: ./nginx
