@@ -30,8 +30,9 @@ export default function SideBar({ page }: SideBarProps) {
   const { activateMenuSideBar } = useContext(MenuContext);
   const { restaurant } = useContext(RestaurantContext);
   const navigate = useNavigate();
+  const isVisible = activateMenuSideBar;
   return (
-    <MainContainerSideBar activate={activateMenuSideBar}>
+    <MainContainerSideBar activate={activateMenuSideBar} isVisible={isVisible}>
       <ContainerButtons>
         <ButtonMenu select={page === 'pedidos' && true} onClick={() => navigate('/pedidos')}>
           <IconButton>

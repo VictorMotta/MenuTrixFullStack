@@ -1,9 +1,19 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 interface MainContainerSideBarProps {
   activate?: boolean;
+  isVisible?: boolean;
 }
+
+const moveRightAnimation = keyframes`
+  0% {
+    left: -79%;
+  }
+  100% {
+    left: calc(-79% + 79%);
+  }
+`;
 
 export const MainContainerSideBar = styled.div<MainContainerSideBarProps>`
   min-width: 20%;
@@ -24,6 +34,12 @@ export const MainContainerSideBar = styled.div<MainContainerSideBarProps>`
     left: 0;
     position: fixed;
     z-index: 9;
+    animation: ${(props) =>
+      props.activate
+        ? css`
+            ${moveRightAnimation} .1s linear forwards
+          `
+        : 'none'};
   }
 `;
 
