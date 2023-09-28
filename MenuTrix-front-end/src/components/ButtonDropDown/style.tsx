@@ -9,6 +9,9 @@ export const MainContainerButtonDropDown = styled.div`
   background-color: #fff;
   padding: 0;
   position: relative;
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 interface SelectProps {

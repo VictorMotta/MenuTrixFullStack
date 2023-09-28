@@ -21,12 +21,17 @@ import {
 } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { RestaurantContext } from '../../contexts/restaurantContext';
+import { MenuContext } from '../../contexts/menuContext';
 
-export default function SideBar({ page }: { page: string }) {
+interface SideBarProps {
+  page: string;
+}
+export default function SideBar({ page }: SideBarProps) {
+  const { activateMenuSideBar } = useContext(MenuContext);
   const { restaurant } = useContext(RestaurantContext);
   const navigate = useNavigate();
   return (
-    <MainContainerSideBar>
+    <MainContainerSideBar activate={activateMenuSideBar}>
       <ContainerButtons>
         <ButtonMenu select={page === 'pedidos' && true} onClick={() => navigate('/pedidos')}>
           <IconButton>

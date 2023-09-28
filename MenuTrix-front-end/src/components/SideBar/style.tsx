@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const MainContainerSideBar = styled.div`
+interface MainContainerSideBarProps {
+  activate?: boolean;
+}
+
+export const MainContainerSideBar = styled.div<MainContainerSideBarProps>`
   min-width: 20%;
   height: 95vh;
   min-height: 100%;
@@ -11,6 +15,16 @@ export const MainContainerSideBar = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  @media (max-width: 600px) {
+    display: ${(props) => (props.activate ? 'flex' : 'none')};
+    width: 80%;
+    min-height: calc(100% - 50px);
+    max-height: calc(100% - 50px);
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 9;
+  }
 `;
 
 export const ContainerButtons = styled.div`
@@ -53,13 +67,17 @@ export const ContainerLinkSellInfo = styled.div`
   font-size: 20px;
   color: #e1ffff;
   margin-bottom: 10%;
-  padding: 0 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 10%;
 `;
 
 export const ContainerLinkSell = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
 `;
 
 export const LinkSell = styled(Link)`

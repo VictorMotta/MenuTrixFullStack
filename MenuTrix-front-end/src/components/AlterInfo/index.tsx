@@ -4,10 +4,12 @@ import {
   ContainerButton,
   ContainerNew,
   FirstInput,
+  FirstInputMask,
   Input,
   InputContainer,
   Label,
   MainContainer,
+  MaskInput,
 } from './style';
 import { User, alterUser } from '../../services/userApi';
 import useToken from '../../hooks/useToken';
@@ -160,31 +162,61 @@ export default function AlterInfo({
     <MainContainer onSubmit={(e) => handleSubmit(e)}>
       <InputContainer>
         <Label htmlFor={'main' + infos.firstLetterUpper}>{infos.upperCase} ATUAL:</Label>
-        <FirstInput
-          type={infos.lowerCase}
-          name={'main' + infos.firstLetterUpper}
-          onChange={editBodyInfo}
-          value={bodyInfo['main' + infos.firstLetterUpper]}
-        />
+        {title === 'cpf' ? (
+          <FirstInputMask
+            mask='999.999.999-99'
+            type={infos.lowerCase}
+            name={'main' + infos.firstLetterUpper}
+            onChange={editBodyInfo}
+            value={bodyInfo['main' + infos.firstLetterUpper]}
+          />
+        ) : (
+          <FirstInput
+            type={infos.lowerCase}
+            name={'main' + infos.firstLetterUpper}
+            onChange={editBodyInfo}
+            value={bodyInfo['main' + infos.firstLetterUpper]}
+          />
+        )}
       </InputContainer>
       <ContainerNew>
         <InputContainer>
           <Label htmlFor={'new' + infos.firstLetterUpper}>NOVO {infos.upperCase}:</Label>
-          <Input
-            type={infos.lowerCase}
-            name={'new' + infos.firstLetterUpper}
-            onChange={editBodyInfo}
-            value={bodyInfo['new' + infos.firstLetterUpper]}
-          />
+          {title === 'cpf' ? (
+            <MaskInput
+              mask='999.999.999-99'
+              type={infos.lowerCase}
+              name={'new' + infos.firstLetterUpper}
+              onChange={editBodyInfo}
+              value={bodyInfo['new' + infos.firstLetterUpper]}
+            />
+          ) : (
+            <Input
+              type={infos.lowerCase}
+              name={'new' + infos.firstLetterUpper}
+              onChange={editBodyInfo}
+              value={bodyInfo['new' + infos.firstLetterUpper]}
+            />
+          )}
         </InputContainer>
         <InputContainer>
           <Label htmlFor={'repeat' + infos.firstLetterUpper}>REPITA {infos.upperCase}:</Label>
-          <Input
-            type={infos.lowerCase}
-            name={'repeat' + infos.firstLetterUpper}
-            onChange={editBodyInfo}
-            value={bodyInfo['repeat' + infos.firstLetterUpper]}
-          />
+          {title === 'cpf' ? (
+            <MaskInput
+              mask='999.999.999-99'
+              type={infos.lowerCase}
+              name={'repeat' + infos.firstLetterUpper}
+              onChange={editBodyInfo}
+              value={bodyInfo['repeat' + infos.firstLetterUpper]}
+            />
+          ) : (
+            <Input
+              type={infos.lowerCase}
+              name={'repeat' + infos.firstLetterUpper}
+              onChange={editBodyInfo}
+              value={bodyInfo['repeat' + infos.firstLetterUpper]}
+            />
+          )}
         </InputContainer>
       </ContainerNew>
       <ContainerButton>

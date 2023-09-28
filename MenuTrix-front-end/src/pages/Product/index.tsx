@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import SideBar from '../../components/SideBar';
-import TopBar from '../../components/TopBar/index';
 import { MdAddCircle } from 'react-icons/md';
 import {
   ButtonCreate,
@@ -86,7 +85,6 @@ export function Product() {
 
   return (
     <MainContainer>
-      <TopBar />
       <SecondContainer>
         <SideBar page='produtos' />
         <ContentContainer>

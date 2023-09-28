@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import EveryInfo from '../../components/EveryInfo';
 import SideBar from '../../components/SideBar';
-import TopBar from '../../components/TopBar/index';
 import {
   ContainerInfos,
   ContentContainer,
@@ -39,7 +38,6 @@ export function DataAndSecurity() {
 
   return (
     <MainContainer>
-      <TopBar />
       <SecondContainer>
         <SideBar page='dataAndSecurity' />
         <ContentContainer>

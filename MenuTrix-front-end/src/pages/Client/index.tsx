@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import SideBar from '../../components/SideBar';
-import TopBar from '../../components/TopBar/index';
 import {
   ButtonCreate,
   ContainerContentClient,
@@ -80,7 +79,6 @@ export function Client() {
 
   return (
     <MainContainer>
-      <TopBar />
       <SecondContainer>
         <SideBar page='clientes' />
         <ContentContainer>

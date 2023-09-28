@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import InputMask from 'react-input-mask';
 
 export const MainContainer = styled.form`
   width: 100%;
@@ -23,6 +24,22 @@ export const FirstInput = styled.input`
   height: 36px;
   border: 1px solid #969595;
   border-radius: 5px;
+  font-family: 'Rubik';
+  font-weight: 500;
+  font-size: 20px;
+  padding-left: 10px;
+  margin-top: 6px;
+`;
+
+export const FirstInputMask = styled(InputMask)`
+  width: 45%;
+  height: 36px;
+  border: 1px solid #969595;
+  font-family: 'Rubik';
+  font-weight: 500;
+  font-size: 20px;
+  border-radius: 5px;
+  padding-left: 10px;
   margin-top: 6px;
 `;
 
@@ -30,7 +47,23 @@ export const Input = styled.input`
   width: 90%;
   height: 36px;
   border: 1px solid #969595;
+  font-family: 'Rubik';
+  font-weight: 500;
+  font-size: 20px;
   border-radius: 5px;
+  padding-left: 10px;
+  margin-top: 6px;
+`;
+
+export const MaskInput = styled(InputMask)`
+  width: 90%;
+  height: 36px;
+  border: 1px solid #969595;
+  font-family: 'Rubik';
+  font-weight: 500;
+  font-size: 20px;
+  border-radius: 5px;
+  padding-left: 10px;
   margin-top: 6px;
 `;
 

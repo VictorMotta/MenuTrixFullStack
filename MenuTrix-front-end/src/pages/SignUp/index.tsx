@@ -1,5 +1,4 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import TopBar from '../../components/TopBar';
 import {
   SecondContainer,
   MainContainer,
@@ -18,6 +17,7 @@ import {
   LinkGoBack,
   ContainerLinkGoBack,
   ContainerButtonGoogle,
+  MaskInput,
 } from './style';
 import { FcGoogle } from 'react-icons/fc';
 import { signUp } from '../../services/userApi';
@@ -33,6 +33,7 @@ export function SignUp() {
     password: '',
     repeatPassword: '',
   });
+  console.log(body);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -46,6 +47,9 @@ export function SignUp() {
   }
 
   async function editBody(e: ChangeEvent<HTMLInputElement>) {
+    if (e.target.name === 'cpf') {
+      return setBody({ ...body, cpf: e.target.value.replaceAll('.', '').replaceAll('-', '') });
+    }
     setBody({ ...body, [e.target.name]: e.target.value });
   }
 
@@ -71,7 +75,13 @@ export function SignUp() {
           </ContainerOr>
           <Form onSubmit={handleSubmit}>
             <Input placeholder='Nome' name='name' value={body.name} onChange={editBody} />
-            <Input placeholder='CPF' name='cpf' value={body.cpf} onChange={editBody} />
+            <MaskInput
+              mask='999.999.999-99'
+              placeholder='CPF'
+              name='cpf'
+              value={body?.cpf || ''}
+              onChange={editBody}
+            />
             <Input placeholder='E-mail' name='email' value={body.email} onChange={editBody} />
             <Input
               placeholder='Senha'

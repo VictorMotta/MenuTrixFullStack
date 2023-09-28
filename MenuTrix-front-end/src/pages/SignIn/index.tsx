@@ -1,5 +1,4 @@
 import { ChangeEvent, FormEvent, useContext, useState } from 'react';
-import TopBar from '../../components/TopBar';
 import {
   SecondContainer,
   MainContainer,
@@ -49,7 +48,7 @@ export function SignIn() {
       console.log('entrou!');
       login(response);
 
-      navigate('/produtos');
+      navigate('/pedidos');
     } catch (error) {
       toast.error('Erro ao tentar entrar!');
     }

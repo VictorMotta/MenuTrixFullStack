@@ -2,7 +2,6 @@ import { FormEvent, useEffect, useRef, useState } from 'react';
 import { AdditionalItem } from '../../components/AdditionalItem';
 import { SearchInput } from '../../components/SearchInput';
 import SideBar from '../../components/SideBar';
-import TopBar from '../../components/TopBar/index';
 import {
   ButtonCreate,
   ContainerContentAdditional,
@@ -76,7 +75,6 @@ export function Additional() {
 
   return (
     <MainContainer>
-      <TopBar />
       <SecondContainer>
         <SideBar page='adicionais' />
         <ContentContainer>

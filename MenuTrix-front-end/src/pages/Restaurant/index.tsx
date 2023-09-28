@@ -1,6 +1,5 @@
 import { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react';
 import SideBar from '../../components/SideBar';
-import TopBar from '../../components/TopBar/index';
 import {
   ContentContainer,
   MainContainer,
@@ -168,7 +167,6 @@ export function Restaurant() {
 
   return (
     <MainContainer>
-      <TopBar />
       <SecondContainer>
         <SideBar page='restaurant' />
         <ContentContainer>

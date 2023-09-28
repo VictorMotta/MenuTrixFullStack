@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import InputMask from 'react-input-mask';
 
 export const MainContainer = styled.div`
   width: 100%;
@@ -12,8 +13,8 @@ export const MainContainer = styled.div`
   padding-top: 100px;
   @media (max-width: 600px) {
     display: block;
-    padding-top: 15%;
-    min-height: 100vh;
+    padding-top: 10%;
+    min-height: 90vh;
     background-color: #fff;
   }
 `;
@@ -158,6 +159,20 @@ export const Input = styled.input`
   }
 `;
 
+export const MaskInput = styled(InputMask)`
+  font-family: 'Rubik', 'sans-serif';
+  font-weight: 400;
+  font-size: 20px;
+  width: 80%;
+  border: 1px solid #80aac8;
+  border-radius: 5px;
+  padding: 8px 20px 8px 20px;
+  margin-bottom: 20px;
+  @media (max-width: 600px) {
+    width: 90%;
+  }
+`;
+
 export const ButtonForm = styled.button`
   width: 80%;
   text-align: center;
@@ -180,6 +195,7 @@ export const ContainerLinkGoBack = styled.div`
   @media (max-width: 600px) {
     width: 100%;
     justify-content: center;
+    margin-top: 40px;
   }
 `;
 
