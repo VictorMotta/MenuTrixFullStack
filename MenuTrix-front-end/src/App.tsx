@@ -9,6 +9,7 @@ import { Client } from './pages/Client';
 import { Financial } from './pages/Financial';
 import { Estoque } from './pages/Stock';
 import { NotFoundPage } from './pages/NotFound';
+import TopBar from './components/TopBar';
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
             pauseOnHover
             theme='light'
           />
+          <TopBar />
           <Routes>
             <Route path='/' element={<SignIn />} />
             <Route path='/cadastro' element={<SignUp />} />

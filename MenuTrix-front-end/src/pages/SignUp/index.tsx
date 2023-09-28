@@ -17,6 +17,7 @@ import {
   InfoGoBack,
   LinkGoBack,
   ContainerLinkGoBack,
+  ContainerButtonGoogle,
 } from './style';
 import { FcGoogle } from 'react-icons/fc';
 import { signUp } from '../../services/userApi';
@@ -50,17 +51,18 @@ export function SignUp() {
 
   return (
     <MainContainer>
-      <TopBar page='login' />
       <SecondContainer>
         <TitleFormContainer>
           <TitleForm>Cadastre-se no MenuTrix</TitleForm>
         </TitleFormContainer>
         <FormContainer>
           <ButtonGoogle>
-            <IconGoogle>
-              <FcGoogle></FcGoogle>
-            </IconGoogle>
-            Cadastre-se com Google
+            <ContainerButtonGoogle>
+              <IconGoogle>
+                <FcGoogle></FcGoogle>
+              </IconGoogle>
+              Cadastre-se com Google
+            </ContainerButtonGoogle>
           </ButtonGoogle>
           <ContainerOr>
             <Line lineDirection='left'></Line>

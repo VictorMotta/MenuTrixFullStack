@@ -17,6 +17,7 @@ import {
   InfoGoBack,
   LinkGoBack,
   ContainerLinkGoBack,
+  ContainerButtonGoogle,
 } from './style';
 import { FcGoogle } from 'react-icons/fc';
 import { toast } from 'react-toastify';
@@ -56,17 +57,18 @@ export function SignIn() {
 
   return (
     <MainContainer>
-      <TopBar page='login' />
       <SecondContainer>
         <TitleFormContainer>
           <TitleForm>Logar-se no MenuTrix</TitleForm>
         </TitleFormContainer>
         <FormContainer>
           <ButtonGoogle>
-            <IconGoogle>
-              <FcGoogle></FcGoogle>
-            </IconGoogle>
-            Entrar com Google
+            <ContainerButtonGoogle>
+              <IconGoogle>
+                <FcGoogle></FcGoogle>
+              </IconGoogle>
+              Entrar com Google
+            </ContainerButtonGoogle>
           </ButtonGoogle>
           <ContainerOr>
             <Line lineDirection='left'></Line>

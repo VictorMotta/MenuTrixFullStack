@@ -10,6 +10,12 @@ export const MainContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding-top: 100px;
+  @media (max-width: 600px) {
+    display: block;
+    padding-top: 15%;
+    min-height: 84vh;
+    background-color: #fff;
+  }
 `;
 
 export const SecondContainer = styled.div`
@@ -18,6 +24,11 @@ export const SecondContainer = styled.div`
   border: 2px solid #29333a;
   margin-bottom: 50px;
   border-radius: 10px;
+  @media (max-width: 600px) {
+    width: 100%;
+    border-radius: 0;
+    border: none;
+  }
 `;
 
 export const TitleFormContainer = styled.div`
@@ -25,6 +36,9 @@ export const TitleFormContainer = styled.div`
   background-color: #29333a;
   padding: 20px 0 20px 0;
   border-radius: 5px 5px 0 0;
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 export const TitleForm = styled.h1`
@@ -44,17 +58,30 @@ export const FormContainer = styled.div`
 
 export const ButtonGoogle = styled.button`
   display: flex;
-  align-items: center;
-  border: none;
+  width: 40%;
+  justify-content: center;
+  border: 0.5px solid #9b9b9b;
   border-radius: 10px;
   background-color: #ffffff;
   box-shadow: 0px 4px 10px 3px rgba(0, 0, 0, 0.25);
+  margin-top: 5%;
+  cursor: pointer;
+  @media (max-width: 600px) {
+    margin-top: 0;
+    width: 90%;
+  }
+`;
+
+export const ContainerButtonGoogle = styled.div`
+  display: flex;
+  align-items: center;
   font-family: 'Rubik', 'sans-serif';
   font-weight: 400;
   font-size: 20px;
   padding: 10px 30px 10px 30px;
-  margin-top: 5%;
-  cursor: pointer;
+  @media (max-width: 600px) {
+    font-size: 14px;
+  }
 `;
 
 export const IconGoogle = styled.div`
@@ -62,6 +89,11 @@ export const IconGoogle = styled.div`
   align-items: center;
   font-size: 28px;
   margin-right: 14px;
+  @media (max-width: 600px) {
+    font-size: 20px;
+    font-weight: 500;
+    margin-right: 30px;
+  }
 `;
 
 export const ContainerOr = styled.div`
@@ -70,6 +102,9 @@ export const ContainerOr = styled.div`
   align-items: center;
   justify-content: center;
   margin: 5% 0 5% 0;
+  @media (max-width: 600px) {
+    width: 90%;
+  }
 `;
 
 export const Line = styled.div<LinePropType>`
@@ -77,6 +112,9 @@ export const Line = styled.div<LinePropType>`
   border: 1px solid #707070;
   margin-top: 3px;
   margin: ${(props) => (props.lineDirection === 'left' ? '0 12px 0 0' : '0 0 0 12px')};
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 type LinePropType = React.ComponentProps<'div'> & {
@@ -88,6 +126,9 @@ export const OrText = styled.h1`
   font-weight: 400;
   font-size: 20px;
   color: #707070;
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
 `;
 
 export const Form = styled.form`
@@ -98,6 +139,9 @@ export const Form = styled.form`
   font-family: 'Rubik', 'sans-serif';
   font-weight: 400;
   font-size: 20px;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 export const Input = styled.input`
@@ -109,6 +153,9 @@ export const Input = styled.input`
   border-radius: 5px;
   padding: 8px 20px 8px 20px;
   margin-bottom: 20px;
+  @media (max-width: 600px) {
+    width: 90%;
+  }
 `;
 
 export const ButtonForm = styled.button`
@@ -130,6 +177,10 @@ export const ContainerLinkGoBack = styled.div`
   display: flex;
   margin-top: 60px;
   margin-bottom: 30px;
+  @media (max-width: 600px) {
+    width: 100%;
+    justify-content: center;
+  }
 `;
 
 export const InfoGoBack = styled.h1`
@@ -137,6 +188,9 @@ export const InfoGoBack = styled.h1`
   font-weight: 600;
   font-size: 20px;
   color: #000000;
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
 `;
 
 export const LinkGoBack = styled(Link)`
@@ -145,4 +199,7 @@ export const LinkGoBack = styled(Link)`
   font-size: 20px;
   color: #00acac;
   margin-left: 8px;
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
 `;
