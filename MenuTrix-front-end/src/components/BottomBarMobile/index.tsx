@@ -1,30 +1,37 @@
-import { MdMenu } from 'react-icons/md';
+import { ReactNode, useContext, useEffect } from 'react';
 import {
-  ButtonSquareCreate,
   FirstContainerButtons,
   IconClose,
   IconConfig,
   IconFilter,
   IconMagnifyingGlass,
   IconMenu,
-  IconPlusSquareCreate,
   MainContainer,
   SecondContainerButtons,
   ThirdContainerButtons,
 } from './style';
-import { useContext } from 'react';
 import { MenuContext } from '../../contexts/menuContext';
 
-interface PropsBottomBarMobile {
-  activateMenuSideBar: boolean;
+interface BottomBarMobileProps {
+  searchActivate: boolean;
+  openAndCloseMenu: () => any;
+  openAndCloseMenuConfig: () => any;
+  children: ReactNode;
 }
 
-export default function BottomBarMobile() {
-  const { activateMenuSideBar, setActivateMenuSideBar } = useContext(MenuContext);
+export default function BottomBarMobile({
+  searchActivate,
+  openAndCloseMenu,
+  openAndCloseMenuConfig,
+  children
+}: BottomBarMobileProps) {
+  const { activateMenuSideBar, activeMenuSideBarConfig, resetDados } = useContext(MenuContext);
 
-  function openAndCloseMenu() {
-    setActivateMenuSideBar(!activateMenuSideBar);
-  }
+  useEffect(() => {
+    resetDados();
+  }, [])
+
+
   return (
     <MainContainer>
       <FirstContainerButtons>
@@ -35,14 +42,16 @@ export default function BottomBarMobile() {
         )}
       </FirstContainerButtons>
       <SecondContainerButtons>
-        <ButtonSquareCreate hidden={activateMenuSideBar}>
-          <IconPlusSquareCreate />
-        </ButtonSquareCreate>
+        {children}
       </SecondContainerButtons>
       <ThirdContainerButtons>
-        <IconMagnifyingGlass />
+        <IconMagnifyingGlass activateMGlass={searchActivate} />
         <IconFilter />
-        <IconConfig />
+        {activeMenuSideBarConfig ? (
+          <IconClose onClick={openAndCloseMenuConfig} />
+        ) : (
+          <IconConfig onClick={openAndCloseMenuConfig} />
+        )}
       </ThirdContainerButtons>
     </MainContainer>
   );

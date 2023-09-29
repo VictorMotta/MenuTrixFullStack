@@ -11,6 +11,7 @@ import { Estoque } from './pages/Stock';
 import { NotFoundPage } from './pages/NotFound';
 import TopBar from './components/TopBar';
 import { MenuContextProvider } from './contexts/menuContext';
+import SideBarConfig from './components/SideBarConfig/index';
 
 export default function App() {
   return (

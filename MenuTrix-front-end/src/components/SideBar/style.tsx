@@ -35,11 +35,11 @@ export const MainContainerSideBar = styled.div<MainContainerSideBarProps>`
     position: fixed;
     z-index: 9;
     animation: ${(props) =>
-      props.activate
-        ? css`
+    props.activate
+      ? css`
             ${moveRightAnimation} .1s linear forwards
           `
-        : 'none'};
+      : 'none'};
   }
 `;
 
@@ -67,6 +67,9 @@ export const IconButton = styled.div`
   color: #9ab3b3;
   display: flex;
   align-items: center;
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
 `;
 
 export const NameButton = styled.div`
@@ -75,6 +78,9 @@ export const NameButton = styled.div`
   font-size: 30px;
   color: #e1ffff;
   margin-left: 12px;
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
 `;
 
 export const ContainerLinkSellInfo = styled.div`
@@ -87,6 +93,9 @@ export const ContainerLinkSellInfo = styled.div`
   flex-direction: column;
   align-items: center;
   padding-bottom: 10%;
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
 `;
 
 export const ContainerLinkSell = styled.div`
@@ -107,4 +116,7 @@ export const ButtonCopy = styled.div`
   margin-left: 10px;
   font-size: 24px;
   color: #e1ffff;
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
 `;

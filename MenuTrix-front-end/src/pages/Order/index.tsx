@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import SideBar from '../../components/SideBar';
 import {
   ButtonCreate,
@@ -10,10 +10,33 @@ import {
 import { MdAddCircle } from 'react-icons/md';
 import { CreateOrder } from '../../components/CreateOrder';
 import BottomBarMobile from '../../components/BottomBarMobile';
+import { MenuContext } from '../../contexts/menuContext';
+import SideBarConfig from '../../components/SideBarConfig';
+import { ButtonSquareCreate, IconPlusSquareCreate } from '../../components/BottomBarMobile/style';
 
 export function Order() {
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [loadingPage, setLoadingPage] = useState<boolean>(false);
+  const [alterButtonMenu, setAlterButtonMenu] = useState<boolean>(false);
+
+  const {
+    activateMenuSideBar,
+    setActivateMenuSideBar,
+    activeMenuSideBarConfig,
+    setActiveMenuSideBarConfig
+  } = useContext(MenuContext);
+
+  function openAndCloseMenu() {
+    setAlterButtonMenu(!alterButtonMenu);
+    setActiveMenuSideBarConfig(false);
+    setActivateMenuSideBar(!activateMenuSideBar);
+  }
+
+  function openAndCloseMenuConfig() {
+    setActiveMenuSideBarConfig(!activeMenuSideBarConfig);
+    setActivateMenuSideBar(false);
+    setAlterButtonMenu(!alterButtonMenu);
+  }
 
   return (
     <>
@@ -40,7 +63,12 @@ export function Order() {
           </ContentContainer>
         </SecondContainer>
       </MainContainer>
-      <BottomBarMobile></BottomBarMobile>
+      <BottomBarMobile searchActivate={false} openAndCloseMenu={openAndCloseMenu} openAndCloseMenuConfig={openAndCloseMenuConfig} >
+        <ButtonSquareCreate hidden={alterButtonMenu}>
+          <IconPlusSquareCreate />
+        </ButtonSquareCreate>
+      </BottomBarMobile>
+      <SideBarConfig />
     </>
   );
 }

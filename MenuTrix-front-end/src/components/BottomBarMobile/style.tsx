@@ -94,7 +94,12 @@ export const IconFilter = styled(MdFilterAlt)`
   cursor: pointer;
 `;
 
-export const IconMagnifyingGlass = styled(FaSearch)`
+interface PropsIconMagnifyingGlass {
+  activateMGlass?: boolean;
+}
+
+export const IconMagnifyingGlass = styled(FaSearch)<PropsIconMagnifyingGlass>`
+  display: ${(props) => props.activateMGlass ? 'block' : 'none'};
   font-size: 25px;
   color: #9ab3b3;
   margin-right: 5%;
