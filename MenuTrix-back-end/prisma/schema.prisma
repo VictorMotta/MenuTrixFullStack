@@ -225,7 +225,7 @@ model Address {
 model Order {
   id                Int             @id @default(autoincrement())
   price             Int
-  status            StatusOrder     @default(PEDING)
+  status            StatusOrder     @default(PENDING)
   clientId          Int
   Client            Client          @relation(fields: [clientId], references: [id], onDelete: Cascade)
   deliveryOptionsId Int
@@ -238,7 +238,7 @@ model Order {
 }
 
 enum StatusOrder {
-  PEDING
+  PENDING
   CONCLUDED
   PROGRESS
   DELIVERY

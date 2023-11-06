@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { ProductRes } from '../../pages';
 import {
   ContainerInfo,
@@ -19,61 +19,90 @@ import {
 } from './style';
 import LOGORESTAURANTE from '../../assets/img/logoHamburger.png';
 import { currencyValue } from '../../functions/masks';
-import { OrderBody } from '../CreateOrder';
+
+
+interface Additional {
+  id: number,
+  name: string,
+  price: number
+}
 
 interface PropsProductCreateOrder {
   item: ProductRes;
   index: number;
   allProducts: ProductRes[];
   setAllProducts: Dispatch<SetStateAction<ProductRes[]>>;
-  orderProduct: OrderBody['OrderProduct'];
-  setOrderProduct: Dispatch<SetStateAction<OrderBody['OrderProduct']>>;
   selectProduct: ProductRes[];
   setSelectProduct: Dispatch<SetStateAction<ProductRes[]>>;
+  totalValue: number;
+  setTotalValue: Dispatch<SetStateAction<number>>;
 }
+
+
 
 export function ProductCreateOrder({
   item,
   index,
-  orderProduct,
-  setOrderProduct,
   selectProduct,
   setSelectProduct,
+  totalValue,
+  setTotalValue
 }: PropsProductCreateOrder) {
   const [openInfo, setOpenInfo] = useState<boolean>(true);
-  const [additionalsSelected, setAdditionalsSelected] = useState<number[]>([]);
+
   const [meatPoint, setMeatPoint] = useState<string>('');
+  const [totalAdditional, setTotalAdditional] = useState<number>(0);
 
   const typeMeatPoint = ['Mal Passada', 'Ao Ponto', 'Bem Passado'];
   const price = currencyValue(String(item.price));
 
-  console.log(orderProduct);
 
-  function selectAdditional(id: number) {
-    if (!additionalsSelected[0]) {
-      return setAdditionalsSelected([id]);
-    }
-    for (let i = 0; i < additionalsSelected.length; i++) {
-      console.log('entrou!');
-      if (additionalsSelected[i] === id) {
-        const newArr = additionalsSelected.filter((item) => item !== id);
-        setAdditionalsSelected(newArr);
-      } else {
-        setAdditionalsSelected([...additionalsSelected, id]);
-      }
-    }
+  function selectAdditional(additional: Additional) {
+    const findProductByIndex = selectProduct[index];
 
-    setOrderProduct([...orderProduct]);
+    // Cria uma cópia da lista de adicionais selecionados
+    const selectedAdditionals = findProductByIndex.AdditionalsSelected
+      ? [...findProductByIndex.AdditionalsSelected]
+      : [];
+
+
+    if (selectedAdditionals.includes(additional)) {
+      // Remove o adicional da lista de selecionados
+      const updatedAdditionals = selectedAdditionals.filter((selected) => selected !== additional);
+      setTotalAdditional(totalAdditional - additional.price);
+      setTotalValue(totalValue - additional.price);
+
+      // Atualiza o estado selectProduct com a lista atualizada de selecionados
+      setSelectProduct((prevState) => {
+        return prevState.map((product, i) => (i === index ? { ...product, AdditionalsSelected: updatedAdditionals } : product));
+      });
+    } else {
+      // Adiciona o adicional à lista de selecionados
+      const updatedAdditionals = [...selectedAdditionals, additional];
+      setTotalAdditional(totalAdditional + additional.price);
+      setTotalValue(totalValue + additional.price);
+
+      // Atualiza o estado selectProduct com a lista atualizada de selecionados
+      setSelectProduct((prevState) => {
+        return prevState.map((product, i) => (i === index ? { ...product, AdditionalsSelected: updatedAdditionals } : product));
+      });
+    }
   }
+
+
 
   function selectMeatPoint(name: string) {
     setMeatPoint(name);
   }
 
   function cancelInsertProduct() {
+
     /* eslint-disable-next-line */
     const newArr = selectProduct.filter((_product, i) => i !== index);
     setSelectProduct(newArr);
+    const totalItemPlusAdditional = +item.price + totalAdditional;
+    const total = totalValue - totalItemPlusAdditional;
+    setTotalValue(total);
   }
 
   return (
@@ -114,22 +143,20 @@ export function ProductCreateOrder({
               <>
                 <TitleInfoBottom>Adicionais:</TitleInfoBottom>
                 <ContainerItems>
-                  {item.ProductAdditional.map((item) => (
+                  {item.ProductAdditional.map((additional) =>
                     <Item
-                      key={item.Additional.id}
-                      selected={additionalsSelected.includes(item.Additional.id)}
-                      onClick={() => selectAdditional(item.Additional.id)}
-                    >
-                      {item.Additional.name}
+                      key={additional.id}
+                      selected={item.AdditionalsSelected?.includes(additional)}
+                      onClick={() => selectAdditional(additional)}>
+                      {additional.name}
                     </Item>
-                  ))}
+                  )}
                 </ContainerItems>
               </>
             )}
           </ContainerBottom>
           <ContainerButtons>
-            <Button>Adicionar</Button>
-            <Button onClick={cancelInsertProduct}>Cancelar</Button>
+            <Button onClick={cancelInsertProduct}>Excluir</Button>
           </ContainerButtons>
         </>
       )}

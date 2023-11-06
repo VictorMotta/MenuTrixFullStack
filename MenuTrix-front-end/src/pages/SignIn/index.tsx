@@ -42,10 +42,8 @@ export function SignIn() {
     e.preventDefault();
     try {
       const response = await signIn(body);
-      console.log(response);
       getRestaurant(response.token);
       toast.success('Logado com sucesso!');
-      console.log('entrou!');
       login(response);
 
       navigate('/pedidos');

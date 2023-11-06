@@ -40,18 +40,35 @@ import { currencyValue } from '../../functions/masks';
 export interface OrderBody {
   deliveryOption: string;
   clientEmail: string;
-  price: string | number;
+  priceTotal: string | number;
   status: string;
   OrderProduct: {
     productId: string | number;
     meatPoint?: string;
-    OrderProductAdditional: number[];
-  }[];
+    ProductAdditional: {
+      id: number;
+      name: string;
+      price: number;
+    }[];
+  }[]
 }
 
-type OrderState = Omit<OrderBody, 'OrderProduct'>;
 
-export type OrderProductState = Pick<OrderBody, 'OrderProduct'>;
+export type OrderProductState = {
+  productId: string | number;
+  meatPoint?: string;
+  ProductAdditional: {
+    id: number;
+    name: string;
+    price: number;
+  }[];
+};
+
+interface PartialOrder {
+  clientEmail: string;
+  deliveryOption: string,
+  status: string,
+}
 
 interface PropsCreateOrder {
   setOpenCreate: Dispatch<SetStateAction<boolean>>;
@@ -64,19 +81,21 @@ interface SearchType {
 
 export function CreateOrder({ setOpenCreate, setLoadingPage, loadingPage }: PropsCreateOrder) {
   const token = useToken();
+
   const [allProducts, setAllProducts] = useState<ProductRes[]>([] as ProductRes[]);
-  const [selectProduct, setSelectProduct] = useState<ProductRes[]>([] as ProductRes[]);
+
+  const [selectProduct, setSelectProduct] = useState<ProductRes[]>([]);
+
   const [openSearch, setOpenSearch] = useState<boolean>(false);
-  const [orderProduct, setOrderProduct] = useState<OrderBody['OrderProduct']>(
-    [] as OrderBody['OrderProduct']
-  );
-  const [newOrder, setNewOrder] = useState<OrderState>({
+
+  const [totalValue, setTotalValue] = useState<number>(0);
+
+  const [newOrder, setNewOrder] = useState<PartialOrder>({
     clientEmail: '',
     deliveryOption: '',
-    price: '',
-    status: '',
+    status: 'PENDING',
   });
-  const [totalValue, setTotalValue] = useState<string | undefined>(undefined);
+
 
   const [search, setSearch] = useState<SearchType>({ search: '' } as SearchType);
   const typingTimer = useRef<NodeJS.Timeout | null>(null);
@@ -89,17 +108,6 @@ export function CreateOrder({ setOpenCreate, setLoadingPage, loadingPage }: Prop
     [newOrder]
   );
 
-  useEffect(() => {
-    if (selectProduct[0]) {
-      const arrayValue = selectProduct.map((product) => product.price);
-      const total = arrayValue.reduce(
-        (accumulator, currentValue) => Number(accumulator) + Number(currentValue),
-        0
-      );
-      const totalConvert = currencyValue(String(total));
-      setTotalValue(totalConvert);
-    }
-  }, [selectProduct]);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -207,12 +215,14 @@ export function CreateOrder({ setOpenCreate, setLoadingPage, loadingPage }: Prop
               {openSearch && (
                 <ContainerSuspended onMouseLeave={() => setOpenSearch(false)}>
                   {allProducts[0] ? (
-                    allProducts.map((item) => (
+                    allProducts.map((item, _i) => (
                       <SelectProductOrder
                         key={item.id}
                         item={item}
                         selectProduct={selectProduct}
                         setSelectProduct={setSelectProduct}
+                        totalValue={totalValue}
+                        setTotalValue={setTotalValue}
                       />
                     ))
                   ) : (
@@ -231,14 +241,14 @@ export function CreateOrder({ setOpenCreate, setLoadingPage, loadingPage }: Prop
                   index={i}
                   allProducts={allProducts}
                   setAllProducts={setAllProducts}
-                  orderProduct={orderProduct}
-                  setOrderProduct={setOrderProduct}
                   selectProduct={selectProduct}
                   setSelectProduct={setSelectProduct}
+                  totalValue={totalValue}
+                  setTotalValue={setTotalValue}
                 />
               ))}
             <ContainerValueTotal>
-              {totalValue && <ValueTotal>Total: {totalValue}</ValueTotal>}
+              {selectProduct[0] && <ValueTotal>Total: {currencyValue(String(totalValue))}</ValueTotal>}
             </ContainerValueTotal>
           </ContentColumn>
         </ContentContainer>

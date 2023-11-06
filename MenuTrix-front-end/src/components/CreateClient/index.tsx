@@ -52,7 +52,7 @@ export function CreateClient({ setSelected, clients, setClients }: PropsCreateCl
       complement: '',
     },
   } as ClientBody);
-  console.log(newClient);
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {

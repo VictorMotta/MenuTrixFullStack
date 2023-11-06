@@ -8,7 +8,6 @@ export async function getRestaurantConfig(token: string | undefined) {
     },
   });
 
-  console.log(response);
   return response.data;
 }
 

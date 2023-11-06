@@ -27,7 +27,7 @@ async function getAllProductsAvailable(userId: number) {
   if (!restaurant) throw conflictError();
 
   const products = await productsRepository.getAllProductsAvailable(restaurant.id);
-  console.log(products);
+
   return products;
 }
 
@@ -77,7 +77,6 @@ async function alterAvailableProduct(isAvailable: boolean, idProduct: number, us
 async function alterProduct(body: UpdateProductBody, idProduct: number, userId: number) {
   if (typeof idProduct !== 'number' || Number.isNaN(idProduct)) throw conflictError();
 
-  console.log(body.ProductAdditional);
   const restaurant = await restaurantsRepository.getRestaurantById(userId);
   if (!restaurant) throw conflictError();
 

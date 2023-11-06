@@ -67,7 +67,6 @@ export function CreateProduct({ setSelected, loadingPage, setLoadingPage }: Prop
   async function getAllAdditionals() {
     try {
       const additionals = await getAllAdditionalsAvailable(token);
-      console.log(additionals);
       const options: { value: string; label: string }[] = additionals.map((item) => {
         return { value: String(item.id), label: item.name };
       });
@@ -89,7 +88,7 @@ export function CreateProduct({ setSelected, loadingPage, setLoadingPage }: Prop
           id: Number(item.value),
         })),
       };
-      console.log(body);
+
       await createProduct(token, body);
       setLoadingPage(!loadingPage);
       setSelected(false);

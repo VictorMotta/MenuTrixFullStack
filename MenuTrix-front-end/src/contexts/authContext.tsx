@@ -15,17 +15,17 @@ interface AuthContextProps {
 export type UserState =
   | undefined
   | {
-      user: {
-        id: number;
-        name: string;
-        cpf: string;
-        email: string;
-        password?: string;
-        createdAt: string;
-        updatedAt: string;
-      };
-      token: string;
+    user: {
+      id: number;
+      name: string;
+      cpf: string;
+      email: string;
+      password?: string;
+      createdAt: string;
+      updatedAt: string;
     };
+    token: string;
+  };
 
 type AuthContextData = {
   user: UserState;

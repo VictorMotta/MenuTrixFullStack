@@ -5,15 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/authContext';
 import { RestaurantContext } from '../../contexts/restaurantContext';
 
-interface SideBarConfig {
 
-}
-
-export default function SideBarConfig({ }: SideBarConfig) {
+export default function SideBarConfig() {
   const { activeMenuSideBarConfig } = useContext(MenuContext);
   const { logout } = useContext(AuthContext);
   const { clearRestaurant } = useContext(RestaurantContext);
   const navigate = useNavigate();
+
 
   return (
     <MainContainer activateMenu={activeMenuSideBarConfig}>

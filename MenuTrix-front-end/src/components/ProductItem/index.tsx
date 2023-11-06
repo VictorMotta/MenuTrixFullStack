@@ -61,7 +61,7 @@ interface Option {
 }
 
 type ArrayProduct = {
-  Additional: { id: number; name: string };
+  id: number; name: string; price: number;
 }[];
 
 export function ProductItem({
@@ -93,7 +93,7 @@ export function ProductItem({
     getAllAdditionals();
 
     const thisProduct = product.find((object) => object.id === item.id) as ProductRes;
-    console.log(thisProduct);
+
 
     getOptions(thisProduct.ProductAdditional);
     thisProduct.price = currencyValue(String(thisProduct.price)) as string;
@@ -117,7 +117,7 @@ export function ProductItem({
 
   function getOptions(array: ArrayProduct) {
     const options: { value: string; label: string }[] = array.map((item) => {
-      return { value: String(item.Additional.id), label: item.Additional.name };
+      return { value: String(item.id), label: item.name };
     });
 
     setSelectedOption(options);
@@ -148,7 +148,7 @@ export function ProductItem({
 
       if (selectedOption) {
         productEdited.ProductAdditional = selectedOption.map((object) => {
-          return { Additional: { id: +object.value, name: object.label } };
+          return { id: +object.value, name: object.label };
         });
       }
 
@@ -313,7 +313,7 @@ export function ProductItem({
                   <ContainerAdditionalAvailable>
                     {item.ProductAdditional[0] &&
                       item.ProductAdditional.map((item) => (
-                        <AdditionalAvailable>{item.Additional.name}</AdditionalAvailable>
+                        <AdditionalAvailable>{item.name}</AdditionalAvailable>
                       ))}
                   </ContainerAdditionalAvailable>
                 </>

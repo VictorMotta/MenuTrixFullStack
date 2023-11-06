@@ -14,15 +14,21 @@ interface PropsProductCreateOrder {
   item: ProductRes;
   selectProduct: ProductRes[];
   setSelectProduct: Dispatch<SetStateAction<ProductRes[]>>;
+  totalValue: number;
+  setTotalValue: Dispatch<SetStateAction<number>>;
 }
 
 export function SelectProductOrder({
   item,
   selectProduct,
   setSelectProduct,
+  totalValue,
+  setTotalValue
 }: PropsProductCreateOrder) {
+
   function select() {
     setSelectProduct([...selectProduct, item]);
+    setTotalValue(() => totalValue + Number(item.price));
   }
 
   return (

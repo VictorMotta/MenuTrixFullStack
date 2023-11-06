@@ -3,17 +3,29 @@ import { Link } from 'react-router-dom';
 
 interface MainContainerSideBarProps {
   activate?: boolean;
-  isVisible?: boolean;
 }
 
 const moveRightAnimation = keyframes`
   0% {
-    left: -79%;
+    left: -100%;
   }
   100% {
     left: calc(-79% + 79%);
   }
 `;
+
+const moveLeftAnimation = keyframes`
+  100% {
+    left: -100%;
+  }
+  0% {
+    left: calc(-79% + 79%);
+  }
+`;
+
+
+
+
 
 export const MainContainerSideBar = styled.div<MainContainerSideBarProps>`
   min-width: 20%;
@@ -27,11 +39,11 @@ export const MainContainerSideBar = styled.div<MainContainerSideBarProps>`
   justify-content: space-between;
   @media (max-width: 600px) {
     display: ${(props) => (props.activate ? 'flex' : 'none')};
-    width: 80%;
+    width: 100%;
     min-height: calc(100% - 50px);
     max-height: calc(100% - 50px);
     top: 0;
-    left: 0;
+    left: calc(-79% + 79%);
     position: fixed;
     z-index: 9;
     animation: ${(props) =>
@@ -39,7 +51,10 @@ export const MainContainerSideBar = styled.div<MainContainerSideBarProps>`
       ? css`
             ${moveRightAnimation} .1s linear forwards
           `
-      : 'none'};
+      : css`
+            ${moveLeftAnimation} .1s linear forwards
+          `
+  };
   }
 `;
 

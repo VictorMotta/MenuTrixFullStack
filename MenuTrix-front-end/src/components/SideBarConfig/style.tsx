@@ -6,12 +6,25 @@ interface MainContainerProps {
 
 const moveRightAnimation = keyframes`
   0% {
-    right: -79%;
+    right: -55%;
   }
   100% {
-    right: calc(-79% + 79%);
+    right: 0;
   }
 `;
+
+const moveLeftAnimation = keyframes`
+  100% {
+    right: -55%;
+  }
+  0% {
+    right: 0;
+    
+  }
+`;
+
+
+
 
 export const MainContainer = styled.div<MainContainerProps>`
   display: none;
@@ -19,20 +32,19 @@ export const MainContainer = styled.div<MainContainerProps>`
     display: ${(props) => (props.activateMenu ? 'flex' : 'none')};
     flex-direction: column;
     align-items: center;
-    width: 55%;
+    width: 100%;
     min-height: calc(100% - 50px);
     max-height: calc(100% - 50px);
     background-color: #29333a;
     position:fixed;
-    right: 0;
+    right: -55%;
     top: 0;
     z-index: 9;
     animation: ${(props) =>
-    props.activateMenu
-      ? css`
-            ${moveRightAnimation} .1s linear forwards
-          `
-      : 'none'};
+    props.activateMenu ?
+      css` ${moveRightAnimation} .1s linear forwards` :
+      css` ${moveLeftAnimation} .1s linear forwards`
+  }
   }
 `;
 

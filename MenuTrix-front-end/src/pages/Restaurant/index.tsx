@@ -30,6 +30,9 @@ import { toast } from 'react-toastify';
 import { restaurantConfig } from '../../services/restaurantApi';
 import useToken from '../../hooks/useToken';
 import { RestaurantContext } from '../../contexts/restaurantContext';
+import { MenuContext } from '../../contexts/menuContext';
+import BottomBarMobile from '../../components/BottomBarMobile';
+import SideBarConfig from '../../components/SideBarConfig';
 
 export interface RestaurantType {
   nameRestaurant: string;
@@ -76,10 +79,14 @@ export function Restaurant() {
     },
   });
 
+  const { resetDados } = useContext(MenuContext);
+
+
   useEffect(() => {
     if (restaurantContext) return setRestaurant(restaurantContext);
 
     getRestaurant(token, setRestaurant);
+    resetDados();
   }, []);
 
   async function editRestaurant(e: ChangeEvent<HTMLInputElement>) {
@@ -166,254 +173,258 @@ export function Restaurant() {
   }
 
   return (
-    <MainContainer>
-      <SecondContainer>
-        <SideBar page='restaurant' />
-        <ContentContainer>
-          <TitlePage>Configurações Restaurante</TitlePage>
-          <FormInfos onSubmit={handleSubmit}>
-            <ContainerInfos>
-              <ContainerColumn border={true}>
-                <ContainerInput>
-                  <LabelInputInfo htmlFor='nameRestaurant'>Nome do Restaurante</LabelInputInfo>
-                  <InputInfo
-                    name='nameRestaurant'
-                    value={restaurant.nameRestaurant}
-                    onChange={editRestaurant}
-                    required
-                  />
-                </ContainerInput>
-                <ContainerInput>
-                  <LabelInputInfo htmlFor='photoProfile'>Foto de Perfil</LabelInputInfo>
-                  <InputInfo
-                    name='photoProfile'
-                    value={restaurant.photoProfile}
-                    onChange={editRestaurant}
-                    required
-                  />
-                </ContainerInput>
-                <ContainerInput>
-                  <LabelInputInfo htmlFor='photoCover'>Foto de Capa</LabelInputInfo>
-                  <InputInfo
-                    name='photoCover'
-                    value={restaurant.photoCover}
-                    onChange={editRestaurant}
-                    required
-                  />
-                </ContainerInput>
-                <TitleAddress>Endereço</TitleAddress>
-                <ContainerInput>
-                  <LabelInputInfo htmlFor='street'>Rua</LabelInputInfo>
-                  <InputInfo
-                    name='street'
-                    value={restaurant.street}
-                    onChange={editRestaurant}
-                    required
-                  />
-                </ContainerInput>
-                <ContainerInput>
-                  <LabelInputInfo htmlFor='neighborhood'>Bairro</LabelInputInfo>
-                  <InputInfo
-                    name='neighborhood'
-                    value={restaurant.neighborhood}
-                    onChange={editRestaurant}
-                    required
-                  />
-                </ContainerInput>
-                <ContainerInput>
-                  <LabelInputInfo htmlFor='city'>Cidade</LabelInputInfo>
-                  <InputInfo
-                    name='city'
-                    value={restaurant.city}
-                    onChange={editRestaurant}
-                    required
-                  />
-                </ContainerInput>
-                <ContainerInput>
-                  <LabelInputInfo htmlFor='state'>Estado</LabelInputInfo>
-                  <InputInfo
-                    name='state'
-                    value={restaurant.state}
-                    onChange={editRestaurant}
-                    required
-                  />
-                </ContainerInput>
-              </ContainerColumn>
-              <ContainerColumn>
-                <ContainerCheckBox>
-                  <TitleContainer>Opções de entrega</TitleContainer>
-                  <ContainerAllCheckbox>
-                    <ContainerOption>
-                      <CheckBox
-                        type='checkbox'
-                        name='delivery'
-                        value='delivery'
-                        checked={restaurant.deliveryOptions.includes('delivery')}
-                        onChange={selectOptionsDelivery}
-                      />
-                      <LabelCheckBox htmlFor='delivery'>Delivery</LabelCheckBox>
-                    </ContainerOption>
-                    <ContainerOption>
-                      <CheckBox
-                        type='checkbox'
-                        name='withdrawal'
-                        value='withdrawal'
-                        checked={restaurant.deliveryOptions.includes('withdrawal')}
-                        onChange={selectOptionsDelivery}
-                      />
-                      <LabelCheckBox htmlFor='withdrawal'>Retirada</LabelCheckBox>
-                    </ContainerOption>
-                    <ContainerOption>
-                      <CheckBox
-                        type='checkbox'
-                        name='local'
-                        value='local'
-                        checked={restaurant.deliveryOptions.includes('local')}
-                        onChange={selectOptionsDelivery}
-                      />
-                      <LabelCheckBox htmlFor='local'>No local</LabelCheckBox>
-                    </ContainerOption>
-                  </ContainerAllCheckbox>
-                </ContainerCheckBox>
-                <ContainerCheckBox>
-                  <TitleContainer>Horários de Funcionamento</TitleContainer>
-                  <ContainerAllCheckbox>
-                    <ContainerOption>
-                      <CheckBox
-                        type='checkbox'
-                        name='sunday'
-                        value='sunday'
-                        checked={restaurant.daysWeek.includes('sunday')}
-                        onChange={selectDaysWeek}
-                      />
-                      <LabelCheckBox htmlFor='sunday'>Dom</LabelCheckBox>
-                    </ContainerOption>
-                    <ContainerOption>
-                      <CheckBox
-                        type='checkbox'
-                        name='monday'
-                        value='monday'
-                        checked={restaurant.daysWeek.includes('monday')}
-                        onChange={selectDaysWeek}
-                      />
-                      <LabelCheckBox htmlFor='monday'>Seg</LabelCheckBox>
-                    </ContainerOption>
-                    <ContainerOption>
-                      <CheckBox
-                        type='checkbox'
-                        name='tuesday'
-                        value='tuesday'
-                        checked={restaurant.daysWeek.includes('tuesday')}
-                        onChange={selectDaysWeek}
-                      />
-                      <LabelCheckBox htmlFor='tuesday'>Ter</LabelCheckBox>
-                    </ContainerOption>
-                    <ContainerOption>
-                      <CheckBox
-                        type='checkbox'
-                        name='wednesday'
-                        value='wednesday'
-                        checked={restaurant.daysWeek.includes('wednesday')}
-                        onChange={selectDaysWeek}
-                      />
-                      <LabelCheckBox htmlFor='wednesday'>Qua</LabelCheckBox>
-                    </ContainerOption>
-                    <ContainerOption>
-                      <CheckBox
-                        type='checkbox'
-                        name='thursday'
-                        value='thursday'
-                        checked={restaurant.daysWeek.includes('thursday')}
-                        onChange={selectDaysWeek}
-                      />
-                      <LabelCheckBox htmlFor='thursday'>Qui</LabelCheckBox>
-                    </ContainerOption>
-                    <ContainerOption>
-                      <CheckBox
-                        type='checkbox'
-                        name='friday'
-                        value='friday'
-                        checked={restaurant.daysWeek.includes('friday')}
-                        onChange={selectDaysWeek}
-                      />
-                      <LabelCheckBox htmlFor='friday'>Sex</LabelCheckBox>
-                    </ContainerOption>
-                    <ContainerOption>
-                      <CheckBox
-                        type='checkbox'
-                        name='saturday'
-                        value='saturday'
-                        checked={restaurant.daysWeek.includes('saturday')}
-                        onChange={selectDaysWeek}
-                      />
-                      <LabelCheckBox htmlFor='saturday'>Sab</LabelCheckBox>
-                    </ContainerOption>
-                  </ContainerAllCheckbox>
-                  <ContainerHorary>
-                    <SecondContainerHorary>
-                      <TitleHorary>De:</TitleHorary>
-                      <InputHorary
-                        name='ofTimeHour'
-                        value={restaurant.openingHour.ofTimeHour}
-                        onChange={editTime}
-                        type='number'
-                        min='0'
-                        max='23'
-                        required
-                      />
-                      <LabelHorary htmlFor='ofTimeHour'>h</LabelHorary>
-                      <InputHorary
-                        name='ofTimeMinute'
-                        value={restaurant.openingHour.ofTimeMinute}
-                        onChange={editTime}
-                        type='number'
-                        min='0'
-                        max='59'
-                        required
-                      />
-                      <LabelHorary htmlFor='ofTimeMinute'>m</LabelHorary>
-                    </SecondContainerHorary>
-                    <SecondContainerHorary>
-                      <TitleHorary>Até:</TitleHorary>
-                      <InputHorary
-                        name='toTimeHour'
-                        value={restaurant.openingHour.toTimeHour}
-                        onChange={editTime}
-                        type='number'
-                        min='0'
-                        max='23'
-                        required
-                      />
-                      <LabelHorary htmlFor='toTimeHour'>h</LabelHorary>
-                      <InputHorary
-                        name='toTimeMinute'
-                        value={restaurant.openingHour.toTimeMinute}
-                        onChange={editTime}
-                        type='number'
-                        min='0'
-                        max='59'
-                        required
-                      />
-                      <LabelHorary htmlFor='toTimeMinute'>m</LabelHorary>
-                    </SecondContainerHorary>
-                  </ContainerHorary>
-                  <ContainerInputNameSite>
-                    <LabelInputInfo htmlFor='nameParamSite'>Nome do Site</LabelInputInfo>
+    <>
+      <MainContainer>
+        <SecondContainer>
+          <SideBar page='restaurant' />
+          <ContentContainer>
+            <TitlePage>Configurações Restaurante</TitlePage>
+            <FormInfos onSubmit={handleSubmit}>
+              <ContainerInfos>
+                <ContainerColumn border={true}>
+                  <ContainerInput>
+                    <LabelInputInfo htmlFor='nameRestaurant'>Nome do Restaurante</LabelInputInfo>
                     <InputInfo
-                      name='nameParamSite'
-                      value={restaurant.nameParamSite}
+                      name='nameRestaurant'
+                      value={restaurant.nameRestaurant}
                       onChange={editRestaurant}
                       required
-                      placeholder='Ex: "nomedosite" tudo junto'
                     />
-                  </ContainerInputNameSite>
-                </ContainerCheckBox>
-              </ContainerColumn>
-            </ContainerInfos>
-            <ButtonUpdate>Atualizar</ButtonUpdate>
-          </FormInfos>
-        </ContentContainer>
-      </SecondContainer>
-    </MainContainer>
+                  </ContainerInput>
+                  <ContainerInput>
+                    <LabelInputInfo htmlFor='photoProfile'>Foto de Perfil</LabelInputInfo>
+                    <InputInfo
+                      name='photoProfile'
+                      value={restaurant.photoProfile}
+                      onChange={editRestaurant}
+                      required
+                    />
+                  </ContainerInput>
+                  <ContainerInput>
+                    <LabelInputInfo htmlFor='photoCover'>Foto de Capa</LabelInputInfo>
+                    <InputInfo
+                      name='photoCover'
+                      value={restaurant.photoCover}
+                      onChange={editRestaurant}
+                      required
+                    />
+                  </ContainerInput>
+                  <TitleAddress>Endereço</TitleAddress>
+                  <ContainerInput>
+                    <LabelInputInfo htmlFor='street'>Rua</LabelInputInfo>
+                    <InputInfo
+                      name='street'
+                      value={restaurant.street}
+                      onChange={editRestaurant}
+                      required
+                    />
+                  </ContainerInput>
+                  <ContainerInput>
+                    <LabelInputInfo htmlFor='neighborhood'>Bairro</LabelInputInfo>
+                    <InputInfo
+                      name='neighborhood'
+                      value={restaurant.neighborhood}
+                      onChange={editRestaurant}
+                      required
+                    />
+                  </ContainerInput>
+                  <ContainerInput>
+                    <LabelInputInfo htmlFor='city'>Cidade</LabelInputInfo>
+                    <InputInfo
+                      name='city'
+                      value={restaurant.city}
+                      onChange={editRestaurant}
+                      required
+                    />
+                  </ContainerInput>
+                  <ContainerInput>
+                    <LabelInputInfo htmlFor='state'>Estado</LabelInputInfo>
+                    <InputInfo
+                      name='state'
+                      value={restaurant.state}
+                      onChange={editRestaurant}
+                      required
+                    />
+                  </ContainerInput>
+                </ContainerColumn>
+                <ContainerColumn>
+                  <ContainerCheckBox>
+                    <TitleContainer>Opções de entrega</TitleContainer>
+                    <ContainerAllCheckbox>
+                      <ContainerOption>
+                        <CheckBox
+                          type='checkbox'
+                          name='delivery'
+                          value='delivery'
+                          checked={restaurant.deliveryOptions.includes('delivery')}
+                          onChange={selectOptionsDelivery}
+                        />
+                        <LabelCheckBox htmlFor='delivery'>Delivery</LabelCheckBox>
+                      </ContainerOption>
+                      <ContainerOption>
+                        <CheckBox
+                          type='checkbox'
+                          name='withdrawal'
+                          value='withdrawal'
+                          checked={restaurant.deliveryOptions.includes('withdrawal')}
+                          onChange={selectOptionsDelivery}
+                        />
+                        <LabelCheckBox htmlFor='withdrawal'>Retirada</LabelCheckBox>
+                      </ContainerOption>
+                      <ContainerOption>
+                        <CheckBox
+                          type='checkbox'
+                          name='local'
+                          value='local'
+                          checked={restaurant.deliveryOptions.includes('local')}
+                          onChange={selectOptionsDelivery}
+                        />
+                        <LabelCheckBox htmlFor='local'>No local</LabelCheckBox>
+                      </ContainerOption>
+                    </ContainerAllCheckbox>
+                  </ContainerCheckBox>
+                  <ContainerCheckBox>
+                    <TitleContainer>Horários de Funcionamento</TitleContainer>
+                    <ContainerAllCheckbox>
+                      <ContainerOption>
+                        <CheckBox
+                          type='checkbox'
+                          name='sunday'
+                          value='sunday'
+                          checked={restaurant.daysWeek.includes('sunday')}
+                          onChange={selectDaysWeek}
+                        />
+                        <LabelCheckBox htmlFor='sunday'>Dom</LabelCheckBox>
+                      </ContainerOption>
+                      <ContainerOption>
+                        <CheckBox
+                          type='checkbox'
+                          name='monday'
+                          value='monday'
+                          checked={restaurant.daysWeek.includes('monday')}
+                          onChange={selectDaysWeek}
+                        />
+                        <LabelCheckBox htmlFor='monday'>Seg</LabelCheckBox>
+                      </ContainerOption>
+                      <ContainerOption>
+                        <CheckBox
+                          type='checkbox'
+                          name='tuesday'
+                          value='tuesday'
+                          checked={restaurant.daysWeek.includes('tuesday')}
+                          onChange={selectDaysWeek}
+                        />
+                        <LabelCheckBox htmlFor='tuesday'>Ter</LabelCheckBox>
+                      </ContainerOption>
+                      <ContainerOption>
+                        <CheckBox
+                          type='checkbox'
+                          name='wednesday'
+                          value='wednesday'
+                          checked={restaurant.daysWeek.includes('wednesday')}
+                          onChange={selectDaysWeek}
+                        />
+                        <LabelCheckBox htmlFor='wednesday'>Qua</LabelCheckBox>
+                      </ContainerOption>
+                      <ContainerOption>
+                        <CheckBox
+                          type='checkbox'
+                          name='thursday'
+                          value='thursday'
+                          checked={restaurant.daysWeek.includes('thursday')}
+                          onChange={selectDaysWeek}
+                        />
+                        <LabelCheckBox htmlFor='thursday'>Qui</LabelCheckBox>
+                      </ContainerOption>
+                      <ContainerOption>
+                        <CheckBox
+                          type='checkbox'
+                          name='friday'
+                          value='friday'
+                          checked={restaurant.daysWeek.includes('friday')}
+                          onChange={selectDaysWeek}
+                        />
+                        <LabelCheckBox htmlFor='friday'>Sex</LabelCheckBox>
+                      </ContainerOption>
+                      <ContainerOption>
+                        <CheckBox
+                          type='checkbox'
+                          name='saturday'
+                          value='saturday'
+                          checked={restaurant.daysWeek.includes('saturday')}
+                          onChange={selectDaysWeek}
+                        />
+                        <LabelCheckBox htmlFor='saturday'>Sab</LabelCheckBox>
+                      </ContainerOption>
+                    </ContainerAllCheckbox>
+                    <ContainerHorary>
+                      <SecondContainerHorary>
+                        <TitleHorary>De:</TitleHorary>
+                        <InputHorary
+                          name='ofTimeHour'
+                          value={restaurant.openingHour.ofTimeHour}
+                          onChange={editTime}
+                          type='number'
+                          min='0'
+                          max='23'
+                          required
+                        />
+                        <LabelHorary htmlFor='ofTimeHour'>h</LabelHorary>
+                        <InputHorary
+                          name='ofTimeMinute'
+                          value={restaurant.openingHour.ofTimeMinute}
+                          onChange={editTime}
+                          type='number'
+                          min='0'
+                          max='59'
+                          required
+                        />
+                        <LabelHorary htmlFor='ofTimeMinute'>m</LabelHorary>
+                      </SecondContainerHorary>
+                      <SecondContainerHorary>
+                        <TitleHorary>Até:</TitleHorary>
+                        <InputHorary
+                          name='toTimeHour'
+                          value={restaurant.openingHour.toTimeHour}
+                          onChange={editTime}
+                          type='number'
+                          min='0'
+                          max='23'
+                          required
+                        />
+                        <LabelHorary htmlFor='toTimeHour'>h</LabelHorary>
+                        <InputHorary
+                          name='toTimeMinute'
+                          value={restaurant.openingHour.toTimeMinute}
+                          onChange={editTime}
+                          type='number'
+                          min='0'
+                          max='59'
+                          required
+                        />
+                        <LabelHorary htmlFor='toTimeMinute'>m</LabelHorary>
+                      </SecondContainerHorary>
+                    </ContainerHorary>
+                    <ContainerInputNameSite>
+                      <LabelInputInfo htmlFor='nameParamSite'>Nome do Site</LabelInputInfo>
+                      <InputInfo
+                        name='nameParamSite'
+                        value={restaurant.nameParamSite}
+                        onChange={editRestaurant}
+                        required
+                        placeholder='Ex: "nomedosite" tudo junto'
+                      />
+                    </ContainerInputNameSite>
+                  </ContainerCheckBox>
+                </ContainerColumn>
+              </ContainerInfos>
+              <ButtonUpdate>Atualizar</ButtonUpdate>
+            </FormInfos>
+          </ContentContainer>
+        </SecondContainer>
+      </MainContainer>
+      <BottomBarMobile />
+      <SideBarConfig />
+    </>
   );
 }

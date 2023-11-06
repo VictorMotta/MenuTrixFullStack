@@ -20,7 +20,7 @@ export type UpdateProductBody = {
   price: number;
   description: string;
   ProductAdditional: {
-    Additional: { id: number; name: string };
+    id: number; name: string ;
   }[];
 };
 
@@ -50,10 +50,8 @@ export const updateProductSchema = Joi.object<UpdateProductBody>({
   ProductAdditional: Joi.array()
     .items(
       Joi.object({
-        Additional: Joi.object({
           id: Joi.number().required(),
           name: Joi.string().required(),
-        }),
       })
     )
     .required(),

@@ -31,7 +31,6 @@ const RestaurantContext = createContext<RestaurantContextData>({} as RestaurantC
 const RestaurantContextProvider: React.FC<RestaurantContextProps> = ({ children }) => {
   const [restaurant, setRestaurant] = useState<RestaurantState>(undefined);
 
-  console.log(restaurant);
   useEffect(() => {
     const recoveredRestaurant = localStorage.getItem('restaurant');
 
@@ -48,8 +47,6 @@ const RestaurantContextProvider: React.FC<RestaurantContextProps> = ({ children 
       const response = await getRestaurantConfig(token);
       setRestaurant(response);
 
-      const recoveredRestaurant = localStorage.getItem('restaurant');
-      console.log(recoveredRestaurant);
       editRestaurantStorage(response);
 
       if (setParam) {

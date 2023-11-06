@@ -14,7 +14,8 @@ export interface GetProductType {
     Additional: {
       id: number;
       name: string;
-    };
+      price: number;
+    }
   }[];
   ProductCategory: {
     Category: {
@@ -25,7 +26,7 @@ export interface GetProductType {
 }
 
 async function getProductById(id: number, restaurantId: number): Promise<GetProductType> {
-  return await prisma.product.findFirst({
+  const product: any  = await prisma.product.findFirst({
     where: {
       AND: [{ id }, { restaurantId }],
     },
@@ -43,6 +44,7 @@ async function getProductById(id: number, restaurantId: number): Promise<GetProd
             select: {
               id: true,
               name: true,
+              price: true,
             },
           },
         },
@@ -59,10 +61,14 @@ async function getProductById(id: number, restaurantId: number): Promise<GetProd
       },
     },
   });
+
+  product.ProductAdditional = product.ProductAdditional.map((item : any) => item.Additional);
+
+  return product;
 }
 
 async function getAllProducts(restaurantId: number): Promise<GetProductType[]> {
-  return await prisma.product.findMany({
+  const products: any = await prisma.product.findMany({
     where: {
       restaurantId,
     },
@@ -85,6 +91,7 @@ async function getAllProducts(restaurantId: number): Promise<GetProductType[]> {
             select: {
               id: true,
               name: true,
+              price: true,
             },
           },
         },
@@ -104,10 +111,15 @@ async function getAllProducts(restaurantId: number): Promise<GetProductType[]> {
       isAvailable: 'desc',
     },
   });
+
+  for (const product of products){
+    product.ProductAdditional = product.ProductAdditional.map((item : any) => item.Additional);
+  }
+  return products;
 }
 
 async function getProductsContainsName(name: string, restaurantId: number) {
-  return prisma.product.findMany({
+  const products: any = await prisma.product.findMany({
     where: {
       AND: [
         {
@@ -137,6 +149,7 @@ async function getProductsContainsName(name: string, restaurantId: number) {
             select: {
               id: true,
               name: true,
+              price: true,
             },
           },
         },
@@ -156,10 +169,15 @@ async function getProductsContainsName(name: string, restaurantId: number) {
       isAvailable: 'desc',
     },
   });
+
+  for (const product of products){
+    product.ProductAdditional = product.ProductAdditional.map((item : any) => item.Additional);
+  }
+  return products;
 }
 
 async function getProductByName(name: string, restaurantId: number) {
-  return prisma.product.findFirst({
+  return await prisma.product.findFirst({
     where: {
       AND: [{ name }, { restaurantId }],
     },
@@ -167,7 +185,7 @@ async function getProductByName(name: string, restaurantId: number) {
 }
 
 async function getAllProductsAvailable(restaurantId: number) {
-  return prisma.product.findMany({
+  const products: any = await prisma.product.findMany({
     where: {
       AND: [{ restaurantId }, { isAvailable: true }],
     },
@@ -190,6 +208,7 @@ async function getAllProductsAvailable(restaurantId: number) {
             select: {
               id: true,
               name: true,
+              price: true,
             },
           },
         },
@@ -206,10 +225,17 @@ async function getAllProductsAvailable(restaurantId: number) {
       },
     },
   });
+  
+  for (const product of products){
+    if(product.ProductAdditional[0]){
+      product.ProductAdditional = product.ProductAdditional.map((item : any) => item.Additional);
+    }
+  }
+  return products;
 }
 
 async function getAllProductsAvailableByName(name: string, restaurantId: number) {
-  return prisma.product.findMany({
+  const products:any = await prisma.product.findMany({
     where: {
       AND: [
         {
@@ -240,6 +266,7 @@ async function getAllProductsAvailableByName(name: string, restaurantId: number)
             select: {
               id: true,
               name: true,
+              price: true,
             },
           },
         },
@@ -256,6 +283,11 @@ async function getAllProductsAvailableByName(name: string, restaurantId: number)
       },
     },
   });
+
+  for (const product of products){
+    product.ProductAdditional = product.ProductAdditional.map((item : any) => item.Additional);
+  }
+  return products;
 }
 
 async function createProduct(body: ProductBody, restaurantId: number) {
@@ -324,7 +356,7 @@ async function alterAvailable(id: number, isAvailable: boolean) {
 }
 
 async function alterProduct(id: number, data: UpdateProductBody) {
-  return await prisma.$transaction(async (prisma) => {
+  await prisma.$transaction(async (prisma) => {
     await prisma.productAdditional.deleteMany({
       where: {
         productId: id,
@@ -346,7 +378,7 @@ async function alterProduct(id: number, data: UpdateProductBody) {
     for (let i = 0; i < data.ProductAdditional.length; i++) {
       await prisma.productAdditional.create({
         data: {
-          additionalId: data.ProductAdditional[i].Additional.id,
+          additionalId: data.ProductAdditional[i].id,
           productId: id,
         },
       });

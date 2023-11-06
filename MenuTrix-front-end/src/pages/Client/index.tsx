@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { FormEvent, useContext, useEffect, useRef, useState } from 'react';
 import SideBar from '../../components/SideBar';
 import {
   ButtonCreate,
@@ -16,6 +16,10 @@ import { CreateClient } from '../../components/CreateClient';
 import { ClientItem } from '../../components/ClientItem';
 import { getAllClients } from '../../services/clientApi';
 import useToken from '../../hooks/useToken';
+import { MenuContext } from '../../contexts/menuContext';
+import BottomBarMobile from '../../components/BottomBarMobile';
+import { ButtonSquareCreate, IconPlusSquareCreate } from '../../components/BottomBarMobile/style';
+import SideBarConfig from '../../components/SideBarConfig';
 
 interface SearchType {
   search: string;
@@ -45,6 +49,8 @@ export function Client() {
   const [loadingPage, setLoadingPage] = useState<boolean>(false);
   const typingTimer = useRef<NodeJS.Timeout | null>(null);
   const clickedInput = search.search === '';
+  const { alterButtonMenu, resetDados } = useContext(MenuContext);
+
 
   const handleSearchChange = (e: FormEvent<HTMLInputElement>) => {
     if (typingTimer.current) {
@@ -53,8 +59,12 @@ export function Client() {
     setSearch({ ...search, [e.currentTarget.name]: e.currentTarget.value });
     typingTimer.current = setTimeout(startFunction, 500);
   };
+
+
+
   useEffect(() => {
     getClients();
+    resetDados();
   }, [loadingPage]);
   async function getClients() {
     try {
@@ -78,40 +88,48 @@ export function Client() {
   }
 
   return (
-    <MainContainer>
-      <SecondContainer>
-        <SideBar page='clientes' />
-        <ContentContainer>
-          <ContainerCreateSearch>
-            {!selected ? (
-              <>
-                <ButtonCreate onClick={() => setSelected(true)}>
-                  <MdAddCircle />
-                  <h1>Criar</h1>
-                </ButtonCreate>
-                <SearchInput
-                  placeholder='Digite o nome do cliente'
-                  name='search'
-                  onKeyUp={handleSearchChange}
-                  value={search.search}
-                  selected={clickedInput}
-                />
-              </>
-            ) : (
-              <CreateClient setSelected={setSelected} clients={clients} setClients={setClients} />
-            )}
-          </ContainerCreateSearch>
-          <ContainerContentClient>
-            {clients[0] ? (
-              clients.map((item) => <ClientItem item={item} />)
-            ) : (
-              <ContainerNotHasClient>
-                <NotHasClient>Adicione um cliente para aparecer aqui!</NotHasClient>
-              </ContainerNotHasClient>
-            )}
-          </ContainerContentClient>
-        </ContentContainer>
-      </SecondContainer>
-    </MainContainer>
+    <>
+      <MainContainer>
+        <SecondContainer>
+          <SideBar page='clientes' />
+          <ContentContainer>
+            <ContainerCreateSearch>
+              {!selected ? (
+                <>
+                  <ButtonCreate onClick={() => setSelected(true)}>
+                    <MdAddCircle />
+                    <h1>Criar</h1>
+                  </ButtonCreate>
+                  <SearchInput
+                    placeholder='Digite o nome do cliente'
+                    name='search'
+                    onKeyUp={handleSearchChange}
+                    value={search.search}
+                    selected={clickedInput}
+                  />
+                </>
+              ) : (
+                <CreateClient setSelected={setSelected} clients={clients} setClients={setClients} />
+              )}
+            </ContainerCreateSearch>
+            <ContainerContentClient>
+              {clients[0] ? (
+                clients.map((item) => <ClientItem item={item} />)
+              ) : (
+                <ContainerNotHasClient>
+                  <NotHasClient>Adicione um cliente para aparecer aqui!</NotHasClient>
+                </ContainerNotHasClient>
+              )}
+            </ContainerContentClient>
+          </ContentContainer>
+        </SecondContainer>
+      </MainContainer>
+      <BottomBarMobile >
+        <ButtonSquareCreate hidden={alterButtonMenu}>
+          <IconPlusSquareCreate />
+        </ButtonSquareCreate>
+      </BottomBarMobile>
+      <SideBarConfig />
+    </>
   );
 }

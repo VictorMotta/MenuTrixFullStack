@@ -10,6 +10,7 @@ export async function getAllProducts(req: AuthenticatedRequest, res: Response, n
     const response = await productsService.getAllProducts(userId);
     res.send(response);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 }
@@ -40,6 +41,7 @@ export async function getAllProductsAvailable(
     const response = await productsService.getAllProductsAvailable(userId);
     res.send(response);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 }

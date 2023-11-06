@@ -12,7 +12,6 @@ export async function createProduct(token: string | undefined, body: ProductBody
 
 export async function getAllProducts(token: string | undefined) {
   const response = await api.get('/product', createHeaderToken(token));
-
   return response.data;
 }
 

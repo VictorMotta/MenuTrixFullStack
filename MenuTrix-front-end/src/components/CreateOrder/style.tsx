@@ -172,6 +172,7 @@ export const ContainerSuspended = styled.div`
   min-height: 100%;
   max-height: 300%;
   background: #fff;
+  padding: 10px 0;
   position: absolute;
   top: 110%;
   overflow-x: hidden;

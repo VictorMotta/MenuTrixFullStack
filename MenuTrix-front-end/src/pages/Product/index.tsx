@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { FormEvent, useContext, useEffect, useRef, useState } from 'react';
 import SideBar from '../../components/SideBar';
 import { MdAddCircle } from 'react-icons/md';
 import {
@@ -16,6 +16,10 @@ import { CreateProduct } from '../../components/CreateProduct';
 import { ProductItem } from '../../components/ProductItem';
 import { getAllProducts, getProductSearch } from '../../services/productApi';
 import useToken from '../../hooks/useToken';
+import { MenuContext } from '../../contexts/menuContext';
+import BottomBarMobile from '../../components/BottomBarMobile';
+import SideBarConfig from '../../components/SideBarConfig';
+import { ButtonSquareCreate, IconPlusSquareCreate } from '../../components/BottomBarMobile/style';
 
 interface SearchType {
   search: string;
@@ -30,13 +34,16 @@ export interface ProductRes {
   isAvailable: boolean;
   description: string;
   ProductAdditional: {
-    Additional: { id: number; name: string };
+    id: number; name: string; price: number;
   }[];
   ProductCategory: {
     Category: {
       id: true;
       name: true;
     };
+  }[];
+  AdditionalsSelected?: {
+    id: number; name: string; price: number;
   }[];
 }
 
@@ -48,6 +55,8 @@ export function Product() {
   const [loadingPage, setLoadingPage] = useState<boolean>(false);
   const typingTimer = useRef<NodeJS.Timeout | null>(null);
   const [product, setProduct] = useState<undefined | ProductRes[]>(undefined);
+
+  const { alterButtonMenu, resetDados } = useContext(MenuContext);
 
   const handleSearchChange = (e: FormEvent<HTMLInputElement>) => {
     if (typingTimer.current) {
@@ -71,7 +80,7 @@ export function Product() {
 
   useEffect(() => {
     getProducts();
-    /* eslint-disable */
+    resetDados();
   }, [loadingPage]);
 
   async function getProducts() {
@@ -84,55 +93,63 @@ export function Product() {
   }
 
   return (
-    <MainContainer>
-      <SecondContainer>
-        <SideBar page='produtos' />
-        <ContentContainer>
-          <ContainerCreateSearch>
-            {!selected ? (
-              <>
-                <ButtonCreate onClick={() => setSelected(true)}>
-                  <MdAddCircle />
-                  <h1>Criar</h1>
-                </ButtonCreate>
-                <SearchInput
-                  placeholder='Digite o nome do produto'
-                  name='search'
-                  onKeyUp={handleSearchChange}
-                  value={search.search}
-                  selected={clickedInput}
-                />
-              </>
-            ) : (
-              <CreateProduct
-                setSelected={setSelected}
-                setLoadingPage={setLoadingPage}
-                loadingPage={loadingPage}
-              />
-            )}
-          </ContainerCreateSearch>
-          <ContainerProducts>
-            {product ? (
-              <>
-                {product.map((item: ProductRes) => (
-                  <ProductItem
-                    key={item.id}
-                    item={item}
-                    product={product}
-                    setProduct={setProduct}
-                    loadingPage={loadingPage}
-                    setLoadingPage={setLoadingPage}
+    <>
+      <MainContainer>
+        <SecondContainer>
+          <SideBar page='produtos' />
+          <ContentContainer>
+            <ContainerCreateSearch>
+              {!selected ? (
+                <>
+                  <ButtonCreate onClick={() => setSelected(true)}>
+                    <MdAddCircle />
+                    <h1>Criar</h1>
+                  </ButtonCreate>
+                  <SearchInput
+                    placeholder='Digite o nome do produto'
+                    name='search'
+                    onKeyUp={handleSearchChange}
+                    value={search.search}
+                    selected={clickedInput}
                   />
-                ))}
-              </>
-            ) : (
-              <ContainerNotHasProduct>
-                <NotHasProduct>Adicione um produto para aparecer aqui!</NotHasProduct>
-              </ContainerNotHasProduct>
-            )}
-          </ContainerProducts>
-        </ContentContainer>
-      </SecondContainer>
-    </MainContainer>
+                </>
+              ) : (
+                <CreateProduct
+                  setSelected={setSelected}
+                  setLoadingPage={setLoadingPage}
+                  loadingPage={loadingPage}
+                />
+              )}
+            </ContainerCreateSearch>
+            <ContainerProducts>
+              {product ? (
+                <>
+                  {product.map((item: ProductRes) => (
+                    <ProductItem
+                      key={item.id}
+                      item={item}
+                      product={product}
+                      setProduct={setProduct}
+                      loadingPage={loadingPage}
+                      setLoadingPage={setLoadingPage}
+                    />
+                  ))}
+                </>
+              ) : (
+                <ContainerNotHasProduct>
+                  <NotHasProduct>Adicione um produto para aparecer aqui!</NotHasProduct>
+                </ContainerNotHasProduct>
+              )}
+            </ContainerProducts>
+          </ContentContainer>
+        </SecondContainer>
+      </MainContainer>
+      <BottomBarMobile >
+        <ButtonSquareCreate hidden={alterButtonMenu}>
+          <IconPlusSquareCreate />
+        </ButtonSquareCreate>
+      </BottomBarMobile>
+      <SideBarConfig />
+    </>
   );
 }

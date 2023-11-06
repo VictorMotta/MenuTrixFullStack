@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import SideBar from '../../components/SideBar';
 import {
   ButtonCreate,
@@ -17,26 +17,12 @@ import { ButtonSquareCreate, IconPlusSquareCreate } from '../../components/Botto
 export function Order() {
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [loadingPage, setLoadingPage] = useState<boolean>(false);
-  const [alterButtonMenu, setAlterButtonMenu] = useState<boolean>(false);
+  const { alterButtonMenu, resetDados } = useContext(MenuContext);
 
-  const {
-    activateMenuSideBar,
-    setActivateMenuSideBar,
-    activeMenuSideBarConfig,
-    setActiveMenuSideBarConfig
-  } = useContext(MenuContext);
 
-  function openAndCloseMenu() {
-    setAlterButtonMenu(!alterButtonMenu);
-    setActiveMenuSideBarConfig(false);
-    setActivateMenuSideBar(!activateMenuSideBar);
-  }
-
-  function openAndCloseMenuConfig() {
-    setActiveMenuSideBarConfig(!activeMenuSideBarConfig);
-    setActivateMenuSideBar(false);
-    setAlterButtonMenu(!alterButtonMenu);
-  }
+  useEffect(() => {
+    resetDados();
+  }, [])
 
   return (
     <>
@@ -63,7 +49,7 @@ export function Order() {
           </ContentContainer>
         </SecondContainer>
       </MainContainer>
-      <BottomBarMobile searchActivate={false} openAndCloseMenu={openAndCloseMenu} openAndCloseMenuConfig={openAndCloseMenuConfig} >
+      <BottomBarMobile >
         <ButtonSquareCreate hidden={alterButtonMenu}>
           <IconPlusSquareCreate />
         </ButtonSquareCreate>

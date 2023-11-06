@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 export default function TopBar() {
   const location = useLocation();
   const page = location.pathname.replace('/', '');
-  console.log(page);
+
 
   return (
     <MainTopBarStyle page={page}>

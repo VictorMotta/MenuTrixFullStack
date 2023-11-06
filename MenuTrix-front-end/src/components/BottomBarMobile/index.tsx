@@ -13,24 +13,17 @@ import {
 import { MenuContext } from '../../contexts/menuContext';
 
 interface BottomBarMobileProps {
-  searchActivate: boolean;
-  openAndCloseMenu: () => any;
-  openAndCloseMenuConfig: () => any;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export default function BottomBarMobile({
-  searchActivate,
-  openAndCloseMenu,
-  openAndCloseMenuConfig,
   children
 }: BottomBarMobileProps) {
-  const { activateMenuSideBar, activeMenuSideBarConfig, resetDados } = useContext(MenuContext);
+  const { activateMenuSideBar, activeMenuSideBarConfig, resetDados, openAndCloseMenu, openAndCloseMenuConfig } = useContext(MenuContext);
 
   useEffect(() => {
     resetDados();
   }, [])
-
 
   return (
     <MainContainer>
@@ -45,8 +38,6 @@ export default function BottomBarMobile({
         {children}
       </SecondContainerButtons>
       <ThirdContainerButtons>
-        <IconMagnifyingGlass activateMGlass={searchActivate} />
-        <IconFilter />
         {activeMenuSideBarConfig ? (
           <IconClose onClick={openAndCloseMenuConfig} />
         ) : (

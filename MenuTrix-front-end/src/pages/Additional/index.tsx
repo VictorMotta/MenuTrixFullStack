@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { FormEvent, useContext, useEffect, useRef, useState } from 'react';
 import { AdditionalItem } from '../../components/AdditionalItem';
 import { SearchInput } from '../../components/SearchInput';
 import SideBar from '../../components/SideBar';
@@ -16,6 +16,10 @@ import { MdAddCircle } from 'react-icons/md';
 import { CreateAdditional } from '../../components/CreateAdditional';
 import { getAdditionalSearch, getAllAdditionals } from '../../services/additionalApi';
 import useToken from '../../hooks/useToken';
+import { MenuContext } from '../../contexts/menuContext';
+import BottomBarMobile from '../../components/BottomBarMobile';
+import { ButtonSquareCreate, IconPlusSquareCreate } from '../../components/BottomBarMobile/style';
+import SideBarConfig from '../../components/SideBarConfig';
 
 export interface AdditionalRes {
   id?: number;
@@ -39,6 +43,8 @@ export function Additional() {
   const [additionals, setAdditionals] = useState<AdditionalRes[]>([] as AdditionalRes[]);
   const [loadingPage, setLoadingPage] = useState<boolean>(false);
   const typingTimer = useRef<NodeJS.Timeout | null>(null);
+  const { alterButtonMenu, resetDados } = useContext(MenuContext);
+
 
   const handleSearchChange = (e: FormEvent<HTMLInputElement>) => {
     if (typingTimer.current) {
@@ -62,6 +68,7 @@ export function Additional() {
 
   useEffect(() => {
     getAdditionals();
+    resetDados();
   }, [loadingPage]);
 
   async function getAdditionals() {
@@ -74,51 +81,59 @@ export function Additional() {
   }
 
   return (
-    <MainContainer>
-      <SecondContainer>
-        <SideBar page='adicionais' />
-        <ContentContainer>
-          <ContainerCreateSearch>
-            {!selected ? (
-              <>
-                <ButtonCreate onClick={() => setSelected(true)}>
-                  <MdAddCircle />
-                  <h1>Criar</h1>
-                </ButtonCreate>
-                <SearchInput
-                  placeholder='Digite o nome do adicional'
-                  name='search'
-                  onKeyUp={handleSearchChange}
-                  value={search.search}
-                  selected={clickedInput}
+    <>
+      <MainContainer>
+        <SecondContainer>
+          <SideBar page='adicionais' />
+          <ContentContainer>
+            <ContainerCreateSearch>
+              {!selected ? (
+                <>
+                  <ButtonCreate onClick={() => setSelected(true)}>
+                    <MdAddCircle />
+                    <h1>Criar</h1>
+                  </ButtonCreate>
+                  <SearchInput
+                    placeholder='Digite o nome do adicional'
+                    name='search'
+                    onKeyUp={handleSearchChange}
+                    value={search.search}
+                    selected={clickedInput}
+                  />
+                </>
+              ) : (
+                <CreateAdditional
+                  setSelected={setSelected}
+                  setLoadingPage={setLoadingPage}
+                  loadingPage={loadingPage}
                 />
-              </>
-            ) : (
-              <CreateAdditional
-                setSelected={setSelected}
-                setLoadingPage={setLoadingPage}
-                loadingPage={loadingPage}
-              />
-            )}
-          </ContainerCreateSearch>
-          <ContainerContentAdditional>
-            {additionals[0] ? (
-              additionals.map((item) => (
-                <AdditionalItem
-                  key={item.id}
-                  item={item}
-                  additionals={additionals}
-                  setAdditionals={setAdditionals}
-                />
-              ))
-            ) : (
-              <ContainerNotHasAdditional>
-                <NotHasAdditional>Adicione um adicional para aparecer aqui!</NotHasAdditional>
-              </ContainerNotHasAdditional>
-            )}
-          </ContainerContentAdditional>
-        </ContentContainer>
-      </SecondContainer>
-    </MainContainer>
+              )}
+            </ContainerCreateSearch>
+            <ContainerContentAdditional>
+              {additionals[0] ? (
+                additionals.map((item) => (
+                  <AdditionalItem
+                    key={item.id}
+                    item={item}
+                    additionals={additionals}
+                    setAdditionals={setAdditionals}
+                  />
+                ))
+              ) : (
+                <ContainerNotHasAdditional>
+                  <NotHasAdditional>Adicione um adicional para aparecer aqui!</NotHasAdditional>
+                </ContainerNotHasAdditional>
+              )}
+            </ContainerContentAdditional>
+          </ContentContainer>
+        </SecondContainer>
+      </MainContainer>
+      <BottomBarMobile >
+        <ButtonSquareCreate hidden={alterButtonMenu}>
+          <IconPlusSquareCreate />
+        </ButtonSquareCreate>
+      </BottomBarMobile>
+      <SideBarConfig />
+    </>
   );
 }

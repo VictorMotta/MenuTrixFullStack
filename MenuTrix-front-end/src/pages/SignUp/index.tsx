@@ -33,7 +33,7 @@ export function SignUp() {
     password: '',
     repeatPassword: '',
   });
-  console.log(body);
+
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
